@@ -1,0 +1,57 @@
+﻿<Window x:Class="SWE2TourPlanner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SWE2TourPlanner"
+        mc:Ignorable="d"
+        Title="ValentinsPizzaScam" Height="400" Width="400">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Border Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="Choose your favourite pizza toppings and order"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="20">
+                <CheckBox IsChecked="{Binding IsCheckedBoxSalami}" Content="Salami +2$" />
+                <CheckBox IsChecked="{Binding IsCheckedBoxProsciutto}" Content="Prosciutto +3$" />
+                <CheckBox IsChecked="{Binding IsCheckedBoxCorn}" Content="Corn +1$" />
+                <CheckBox IsChecked="{Binding IsCheckedBoxBacon}" Content="Bacon +3$" />
+                <CheckBox IsChecked="{Binding IsCheckedBoxMushrooms}" Content="Mushrooms +2$" />
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="20">
+                <TextBlock Text="Type in tax percentage" HorizontalAlignment="Center"/>
+                <TextBox Padding="2" Margin="10" 
+                         Text="{Binding Tax, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Order" Margin="10,0,10,0"
+                        Command="{Binding ExecuteCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                <TextBlock Text="Custormers Order" Margin="10,0,0,5"/>
+                <TextBox IsReadOnly="True" Margin="10,0,10,5"
+                         Text="{Binding CustOrder, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Price" Margin="10,0,0,5"/>
+                <TextBox IsReadOnly="True" Margin="10,0,200,5"
+                         Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            
+
+        </Grid>
+
+    </Border>
+</Window>
