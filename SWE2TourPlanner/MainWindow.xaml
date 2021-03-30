@@ -52,7 +52,7 @@
                 <!-- SEARCH BAR -->
                 <TextBox Grid.ColumnSpan="2" Grid.Row="1"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Margin="30,0,30,0" Content="Search" Grid.Row="1" Grid.Column="2"/>
+                <Button Margin="30,0,30,0" Content="Search" Grid.Row="1" Grid.Column="2" />
                 
                 <!-- TOURS -->
                 <Grid Grid.Row="2" Grid.Column="0">
@@ -64,15 +64,18 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Tours" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <Button Content="+" Grid.Column="1" Margin="1"/>
+                    <Button Content="+" Grid.Column="1" Margin="1"
+                            Command="{Binding ExecuteCommand}"/>
                     <Button Content="-" Grid.Column="2" Margin="1"/>
                     <Button Content="..." Grid.Column="3" Margin="1,1,0,1"/>
                 </Grid>
 
-                <ListBox Grid.Row="3" Grid.Column="0">
-                    <ListBoxItem>Item 1</ListBoxItem>
-                    <ListBoxItem>Item 2</ListBoxItem>
-                    <ListBoxItem>Item 3</ListBoxItem>
+                <ListBox Grid.Row="3" Grid.Column="0" ItemsSource="{Binding Data}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 
                 <!-- LABEL & LOGS -->
@@ -135,57 +138,5 @@
             </Grid>
         </Border>
     </Border>
-    
-    
-    
-    
-    
-    <!--
-    <Border Padding="10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Text="Choose your favourite pizza toppings and order"/>
-            <StackPanel Grid.Row="1" Grid.Column="0" Margin="20">
-                <CheckBox IsChecked="{Binding IsCheckedBoxSalami}" Content="Salami +2$" />
-                <CheckBox IsChecked="{Binding IsCheckedBoxProsciutto}" Content="Prosciutto +3$" />
-                <CheckBox IsChecked="{Binding IsCheckedBoxCorn}" Content="Corn +1$" />
-                <CheckBox IsChecked="{Binding IsCheckedBoxBacon}" Content="Bacon +3$" />
-                <CheckBox IsChecked="{Binding IsCheckedBoxMushrooms}" Content="Mushrooms +2$" />
-            </StackPanel>
-            
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="20">
-                <TextBlock Text="Type in tax percentage" HorizontalAlignment="Center"/>
-                <TextBox Padding="2" Margin="10" 
-                         Text="{Binding Tax, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Order" Margin="10,0,10,0"
-                        Command="{Binding ExecuteCommand}"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-                <TextBlock Text="Custormers Order" Margin="10,0,0,5"/>
-                <TextBox IsReadOnly="True" Margin="10,0,10,5"
-                         Text="{Binding CustOrder, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Text="Price" Margin="10,0,0,5"/>
-                <TextBox IsReadOnly="True" Margin="10,0,200,5"
-                         Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            
-
-        </Grid>
-
-    </Border>
-    
-    -->
+   
 </Window>
