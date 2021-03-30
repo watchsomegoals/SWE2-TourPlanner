@@ -11,12 +11,33 @@ namespace SWE2TourPlanner
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public TourAddViewModel tourAddViewModel;
+
+        public List<Tour> _data = new List<Tour>();
+
         public event PropertyChangedEventHandler PropertyChanged;
         private string _searchText;
         public ICommand ExecuteCommand { get; }
+        
         public MainViewModel()
         {
             this.ExecuteCommand = new ExecuteCommand(this);
+            this.tourAddViewModel = new TourAddViewModel();
+            Data.Add(new Tour("tour1"));
+            Data.Add(new Tour("tour2"));
+        }
+
+        public List<Tour> Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = new List<Tour>(tourAddViewModel.TourList);
+                OnPropertyChanged(nameof(Data));
+            }
         }
 
         public string SearchText
