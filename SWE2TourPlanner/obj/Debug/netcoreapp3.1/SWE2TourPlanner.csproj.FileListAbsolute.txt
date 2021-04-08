@@ -7,7 +7,6 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\SWE2TourPlanner.csprojAssemblyReference.cache
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\MainWindow.g.cs
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\App.g.cs
-C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\SWE2TourPlanner_MarkupCompile.cache
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\SWE2TourPlanner_MarkupCompile.lref
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\MainWindow.baml
@@ -20,3 +19,10 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\SWE2TourPlanner.genruntimeconfig.cache
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\TourAddWindow.g.cs
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\TourAddWindow.baml
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.Models.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.Models.pdb
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\SWE2TourPlanner.csproj.CopyComplete
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.BusinessLayer.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.BusinessLayer.pdb
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.pdb

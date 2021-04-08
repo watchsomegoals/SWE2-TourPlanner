@@ -6,4 +6,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SWE2TourPlanner.BusinessLayer\SWE2TourPlanner.BusinessLayer.csproj" />
+    <ProjectReference Include="..\SWE2TourPlanner.Models\SWE2TourPlanner.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "SWE2TourPlanner.BusinessLayer/1.0.0": {
+        "dependencies": {
+          "SWE2TourPlanner.DataAccessLayer": "1.0.0",
+          "SWE2TourPlanner.Models": "1.0.0"
+        },
+        "runtime": {
+          "SWE2TourPlanner.BusinessLayer.dll": {}
+        }
+      },
+      "SWE2TourPlanner.DataAccessLayer/1.0.0": {
+        "dependencies": {
+          "SWE2TourPlanner.Models": "1.0.0"
+        },
+        "runtime": {
+          "SWE2TourPlanner.DataAccessLayer.dll": {}
+        }
+      },
+      "SWE2TourPlanner.Models/1.0.0": {
+        "runtime": {
+          "SWE2TourPlanner.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SWE2TourPlanner.BusinessLayer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SWE2TourPlanner.DataAccessLayer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SWE2TourPlanner.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

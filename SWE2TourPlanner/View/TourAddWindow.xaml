@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SWE2TourPlanner"
+        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourAddViewModel}"
         mc:Ignorable="d"
         Title="TourAddWindow" Height="450" Width="600">
+    <!--
     <Window.DataContext>
         <local:TourAddViewModel />
     </Window.DataContext>
+    -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -20,6 +22,6 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding NewTourText, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Column="1" Grid.Row="0" Content="Add" Command="{Binding ExecuteAddTour}"/>
+        <Button Grid.Column="1" Grid.Row="0" Content="Add" Command="{Binding AddTourCommand}"/>
     </Grid>
 </Window>

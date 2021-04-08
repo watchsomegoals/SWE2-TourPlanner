@@ -3,18 +3,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SWE2TourPlanner"
+        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="Tour-Planner" Height="500" Width="850">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:MainViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Border Padding="10">
         <Border BorderBrush="Black" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
@@ -22,6 +23,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
@@ -49,10 +51,10 @@
                     </MenuItem>
                 </Menu>
                 
-                <!-- SEARCH BAR -->
-                <TextBox Grid.ColumnSpan="2" Grid.Row="1"
+                <!-- SEARCH BAR  -->
+                <TextBox Grid.ColumnSpan="3" Grid.Row="1"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Margin="30,0,30,0" Content="Search" Grid.Row="1" Grid.Column="2" />
+                <Button Margin="30,0,30,0" Content="Search" Grid.Row="1" Grid.Column="3" />
                 
                 <!-- TOURS -->
                 <Grid Grid.Row="2" Grid.Column="0">
@@ -64,29 +66,45 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Tours" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    
                     <Button Content="+" Grid.Column="1" Margin="1"
-                            Command="{Binding ExecuteCommand}"/>
+                            Command="{Binding PopUpAddCommand}"/>
+                    
                     <Button Content="-" Grid.Column="2" Margin="1"/>
                     <Button Content="..." Grid.Column="3" Margin="1,1,0,1"/>
                 </Grid>
+                
+                <GridSplitter Grid.Column="1" Width="3" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-                <ListBox Grid.Row="3" Grid.Column="0" ItemsSource="{Binding Data}">
+                <!--
+                <ListBox Grid.Row="4" Grid.Column="0" ItemsSource="{Binding TourItems}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                -->
                 
-                <!-- LABEL & LOGS -->
-                <TextBlock Text="Label" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <ListBox Grid.Row="4" Grid.Column="0"
+                         x:Name="listTourItems"
+                         ItemsSource="{Binding TourItems}"
+                         SelectedItem="{Binding CurrentItem}"
+                         DisplayMemberPath="Name" />
+                
 
-                <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+                <!-- LABEL & LOGS -->
+                <TextBlock Text="Label" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Margin="2,0,0,0"/>
+
+                <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5" />
+                        <!--<RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
+                        -->
+                        <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     
                     <Border Grid.Row="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1"></Border>
@@ -96,7 +114,13 @@
                     </StackPanel>
                     <Image Grid.Row="1" Source=""/>
 
-                    <Grid Grid.Row="2">
+                    <GridSplitter Height="5" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
@@ -110,29 +134,30 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="Logs" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Logs" VerticalAlignment="Center" Margin="2,0,0,0"/>
                         <Button Content="+" Grid.Column="7" Margin="1"/>
                         <Button Content="-" Grid.Column="8" Margin="1"/>
                         <Button Content="..." Grid.Column="9" Margin="1,1,0,1"/>
-                        
+
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" BorderBrush="Black" BorderThickness="1"></Border>
+                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="date/time" />
+                                <DataGridTextColumn Header="report" />
+                                <DataGridTextColumn Header="distance" />
+                                <DataGridTextColumn Header="total time" />
+                                <DataGridTextColumn Header="rating" />
+                                <DataGridTextColumn Header="avg speed" />
+                                <DataGridTextColumn Header="inclination" />
+                                <DataGridTextColumn Header="top speed" />
+                                <DataGridTextColumn Header="max height" />
+                                <DataGridTextColumn Header="min height" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
                     </Grid>
-                    <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1"></Border>
-                    <DataGrid Grid.Row="3">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="date/time" />
-                            <DataGridTextColumn Header="report" />
-                            <DataGridTextColumn Header="distance" />
-                            <DataGridTextColumn Header="total time" />
-                            <DataGridTextColumn Header="rating" />
-                            <DataGridTextColumn Header="avg speed" />
-                            <DataGridTextColumn Header="inclination" />
-                            <DataGridTextColumn Header="top speed" />
-                            <DataGridTextColumn Header="max height" />
-                            <DataGridTextColumn Header="min height" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-
+                    
+                    
                 </Grid>
                 
             </Grid>
