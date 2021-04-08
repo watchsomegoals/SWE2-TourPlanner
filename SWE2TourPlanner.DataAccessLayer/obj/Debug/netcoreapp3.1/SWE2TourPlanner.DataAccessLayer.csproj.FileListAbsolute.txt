@@ -1,0 +1,12 @@
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\bin\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.deps.json
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\bin\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\bin\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.pdb
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\bin\Debug\netcoreapp3.1\SWE2TourPlanner.Models.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\bin\Debug\netcoreapp3.1\SWE2TourPlanner.Models.pdb
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.csprojAssemblyReference.cache
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.AssemblyInfo.cs
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.csproj.CopyComplete
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.DataAccessLayer\obj\Debug\netcoreapp3.1\SWE2TourPlanner.DataAccessLayer.pdb

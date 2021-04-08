@@ -1,11 +1,77 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "SWE2TourPlanner.BusinessLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "SWE2TourPlanner.DataAccessLayer": "1.0.0",
+          "SWE2TourPlanner.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SWE2TourPlanner.BusinessLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SWE2TourPlanner.BusinessLayer.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
+      "SWE2TourPlanner.DataAccessLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "SWE2TourPlanner.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SWE2TourPlanner.DataAccessLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SWE2TourPlanner.DataAccessLayer.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
+      "SWE2TourPlanner.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/SWE2TourPlanner.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SWE2TourPlanner.Models.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SWE2TourPlanner.BusinessLayer/1.0.0": {
+      "type": "project",
+      "path": "../SWE2TourPlanner.BusinessLayer/SWE2TourPlanner.BusinessLayer.csproj",
+      "msbuildProject": "../SWE2TourPlanner.BusinessLayer/SWE2TourPlanner.BusinessLayer.csproj"
+    },
+    "SWE2TourPlanner.DataAccessLayer/1.0.0": {
+      "type": "project",
+      "path": "../SWE2TourPlanner.DataAccessLayer/SWE2TourPlanner.DataAccessLayer.csproj",
+      "msbuildProject": "../SWE2TourPlanner.DataAccessLayer/SWE2TourPlanner.DataAccessLayer.csproj"
+    },
+    "SWE2TourPlanner.Models/1.0.0": {
+      "type": "project",
+      "path": "../SWE2TourPlanner.Models/SWE2TourPlanner.Models.csproj",
+      "msbuildProject": "../SWE2TourPlanner.Models/SWE2TourPlanner.Models.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "SWE2TourPlanner.BusinessLayer >= 1.0.0",
+      "SWE2TourPlanner.Models >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Lucian\\.nuget\\packages\\": {}
@@ -33,7 +99,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner.BusinessLayer\\SWE2TourPlanner.BusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner.BusinessLayer\\SWE2TourPlanner.BusinessLayer.csproj"
+            },
+            "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner.Models\\SWE2TourPlanner.Models.csproj": {
+              "projectPath": "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner.Models\\SWE2TourPlanner.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
