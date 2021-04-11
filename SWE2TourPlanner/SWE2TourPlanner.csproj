@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+    <Page Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SWE2TourPlanner.BusinessLayer\SWE2TourPlanner.BusinessLayer.csproj" />
     <ProjectReference Include="..\SWE2TourPlanner.Models\SWE2TourPlanner.Models.csproj" />
   </ItemGroup>

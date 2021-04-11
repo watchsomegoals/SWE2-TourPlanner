@@ -18,8 +18,10 @@ namespace SWE2TourPlanner.ViewModels
         private TourItem currentItem;
 
         private ICommand popUpAddCommand;
+        private ICommand deleteTourCommand;
 
-        public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd); 
+        public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
+        public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
 
         public TourAddViewModel tourAddViewModel;
 
@@ -27,7 +29,10 @@ namespace SWE2TourPlanner.ViewModels
 
         public TourItem CurrentItem
         {
-            get { return currentItem; }
+            get 
+            {  
+                return currentItem;
+            }
             set
             {
                 if ((currentItem != value) && (value != null))
@@ -69,17 +74,14 @@ namespace SWE2TourPlanner.ViewModels
                 TourItems.Clear();
                 FillListBox();
             }
-
         }
 
-        
+        private void DeleteTour(object commandParameter)
+        {
+            this.tourItemFactory.DeleteItem(CurrentItem.Name);
+            TourItems.Clear();
+            FillListBox();
+        }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        //{
-        //    Debug.Print($"propertyChanged \"{propertyName}\"");
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
     }
 }

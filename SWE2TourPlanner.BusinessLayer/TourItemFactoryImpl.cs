@@ -9,16 +9,29 @@ namespace SWE2TourPlanner.BusinessLayer
 {
     public class TourItemFactoryImpl : ITourItemFactory
     {
-        private TourItemDAO tourItemDAO = new TourItemDAO();
+        private TourItemDAO databaseTourItemDAO;
+        private TourItemDAO filesystemTourItemDAO;
 
-        public void AddItem(string name)
+        public TourItemFactoryImpl()
         {
-            tourItemDAO.AddItem(name);
+            databaseTourItemDAO = new TourItemDAO(DataType.Database);
+            filesystemTourItemDAO = new TourItemDAO(DataType.Filesystem);
+        }
+
+        public void AddItem(string name, string description, string from, string to)
+        {
+            string imagePath = filesystemTourItemDAO.CreateImage(from, to);
+            databaseTourItemDAO.AddItem(name, description, from, to, imagePath);
+        }
+
+        public void DeleteItem(string name)
+        {
+            databaseTourItemDAO.DeleteItem(name);
         }
 
         public IEnumerable<TourItem> GetItems()
         {
-            return tourItemDAO.GetItems();
+            return databaseTourItemDAO.GetItems();
         }
 
         public IEnumerable<TourItem> Search(string itemName, bool caseSensitive = false)

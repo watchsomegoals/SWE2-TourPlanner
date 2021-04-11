@@ -6,22 +6,36 @@
         xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourAddViewModel}"
         mc:Ignorable="d"
         Title="TourAddWindow" Height="450" Width="600">
-    <!--
-    <Window.DataContext>
-        <local:TourAddViewModel />
-    </Window.DataContext>
-    -->
+    
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
 
-        <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding NewTourText, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Column="1" Grid.Row="0" Content="Add" Command="{Binding AddTourCommand}"/>
+        <StackPanel Grid.Column="1">
+            <Label Content="Enter Tour Name:"/>
+            <TextBox Text="{Binding NewTourText, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Starting Point:"/>
+            <TextBox Text="{Binding From, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Destination:"/>
+            <TextBox Text="{Binding To, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Tour Description:"/>
+            <TextBox Height="200"
+                     Width="Auto"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto" 
+                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <Button Content="Add" Command="{Binding AddTourCommand}" Margin="120,30,120,0"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

@@ -5,15 +5,31 @@ using System.Text;
 
 namespace SWE2TourPlanner.DataAccessLayer
 {
+    public enum DataType
+    {
+        Database,
+        Filesystem
+    }
+
     public class TourItemDAO
     {
         private IDataAccess dataAccess;
 
-        public TourItemDAO()
+        public TourItemDAO(DataType dataType)
         {
-            // check which datasource to use
-            // dataAccess = new FileSystem();
-            dataAccess = new Database();
+            if (dataType == DataType.Database)
+            {
+                dataAccess = new Database();
+            }
+            else if (dataType == DataType.Filesystem)
+            {
+                dataAccess = new FileSystem();
+            }
+        }
+
+        public string CreateImage(string from, string to)
+        {
+            return dataAccess.CreateImage(from, to);
         }
 
         public List<TourItem> GetItems()
@@ -21,9 +37,14 @@ namespace SWE2TourPlanner.DataAccessLayer
             return dataAccess.GetItems();
         }
 
-        public void AddItem(string name)
+        public void AddItem(string name, string description, string from, string to, string imagePath)
         {
-            dataAccess.AddItem(name);
+            dataAccess.AddItem(name, description, from, to, imagePath);
+        }
+
+        public void DeleteItem(string name)
+        {
+            dataAccess.DeleteItem(name);
         }
     }
 }
