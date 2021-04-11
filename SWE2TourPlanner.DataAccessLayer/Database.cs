@@ -8,10 +8,7 @@ namespace SWE2TourPlanner.DataAccessLayer
     class Database : IDataAccess
     {
         private string connectionString;
-        private List<TourItem> tourItems = new List<TourItem>() { new TourItem() {Name = "Salzburg"},
-                                                                  new TourItem() {Name = "Mehedinti"},
-                                                                  new TourItem() {Name = "Galati"},
-                                                                  new TourItem() {Name = "Alcala "}};
+        private List<TourItem> tourItems = new List<TourItem>();
 
         public Database()
         {
@@ -20,9 +17,26 @@ namespace SWE2TourPlanner.DataAccessLayer
             // establish connection with db
         }
 
-        public void AddItem(string name)
+        public void AddItem(string name, string description, string from, string to, string imagePath)
         {
-            tourItems.Add(new TourItem() { Name = name });
+            tourItems.Add(new TourItem() 
+            { 
+                Name = name,
+                Description = description,
+                From = from,
+                To = to,
+                ImagePath = imagePath
+            });
+        }
+
+        public string CreateImage(string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteItem(string name)
+        {
+            tourItems.RemoveAt(tourItems.FindIndex(item => item.Name == name));
         }
 
         public List<TourItem> GetItems()
