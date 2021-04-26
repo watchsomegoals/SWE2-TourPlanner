@@ -11,6 +11,7 @@ namespace SWE2TourPlanner.Models
         public string From { get; set; }
         public string To { get; set; }
         public string ImagePath { get; set; }
+        //public List<LogItem> LogItems { get; set; }
 
     }
 }

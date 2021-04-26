@@ -42,6 +42,11 @@ namespace SWE2TourPlanner.BusinessLayer
             return databaseTourItemDAO.GetItems();
         }
 
+        public IEnumerable<LogItem> GetLogs()
+        {
+            return databaseTourItemDAO.GetLogs();
+        }
+
         public IEnumerable<TourItem> Search(string itemName, bool caseSensitive = false)
         {
             IEnumerable<TourItem> items = GetItems();
@@ -51,6 +56,11 @@ namespace SWE2TourPlanner.BusinessLayer
                 return items.Where(x => x.Name.Contains(itemName));
             }
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
+        }
+
+        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        {
+            databaseTourItemDAO.AddLog(currentTour, dateTime, report, distance, totalTime);
         }
     }
 }
