@@ -1,5 +1,6 @@
 ﻿using SWE2TourPlanner.BusinessLayer;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SWE2TourPlanner.ViewModels
@@ -75,6 +76,8 @@ namespace SWE2TourPlanner.ViewModels
         private void AddTour(object commandParameter)
         {
             this.tourItemFactory.AddItem(NewTourText, Description, From, To);
+            var window = (Window)commandParameter;
+            window.Close();
         }
 
     }

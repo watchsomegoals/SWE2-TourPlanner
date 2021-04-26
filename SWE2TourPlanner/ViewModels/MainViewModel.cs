@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
@@ -23,7 +24,7 @@ namespace SWE2TourPlanner.ViewModels
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
         public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
 
-        public TourAddViewModel tourAddViewModel;
+        //public TourAddViewModel tourAddViewModel;
 
         public ObservableCollection<TourItem> TourItems { get; set; }
 
@@ -46,8 +47,8 @@ namespace SWE2TourPlanner.ViewModels
         public MainViewModel()
         {
             this.tourItemFactory = TourItemFactory.GetInstance();
+            this.tourItemFactory.DeleteImages();
             InitListBox();
-            this.tourAddViewModel = new TourAddViewModel();
         }
 
         private void InitListBox()
@@ -66,22 +67,24 @@ namespace SWE2TourPlanner.ViewModels
 
         private void PopUpAdd(object commandParameter)
         {
+            //this.tourAddViewModel = new TourAddViewModel();
             TourAddWindow view = new TourAddWindow();
-            view.DataContext = this.tourAddViewModel;
-            bool?dialogResult = view.ShowDialog();
-            if(!(bool)dialogResult)
-            {
+            view.DataContext = new TourAddViewModel();
+            view.ShowDialog();
+            //bool?dialogResult = view.ShowDialog();
+            //if(!(bool)dialogResult)
+            //{
                 TourItems.Clear();
                 FillListBox();
-            }
+            //}
         }
 
         private void DeleteTour(object commandParameter)
         {
-            this.tourItemFactory.DeleteItem(CurrentItem.Name);
+            string path = CurrentItem.ImagePath;
+            this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.Name, path);
             TourItems.Clear();
             FillListBox();
         }
-
     }
 }

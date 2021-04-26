@@ -46,5 +46,15 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             dataAccess.DeleteItem(name);
         }
+
+        public void DeleteImage()
+        {
+            dataAccess.DeleteImage();
+        }
+
+        public void SaveImagePath(string path)
+        {
+            dataAccess.SaveImagePath(path);
+        }
     }
 }

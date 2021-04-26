@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SWE2TourPlanner.DataAccessLayer\SWE2TourPlanner.DataAccessLayer.csproj" />
     <ProjectReference Include="..\SWE2TourPlanner.Models\SWE2TourPlanner.Models.csproj" />
   </ItemGroup>

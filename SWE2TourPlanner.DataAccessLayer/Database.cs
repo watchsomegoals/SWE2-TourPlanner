@@ -29,11 +29,6 @@ namespace SWE2TourPlanner.DataAccessLayer
             });
         }
 
-        public string CreateImage(string from, string to)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteItem(string name)
         {
             tourItems.RemoveAt(tourItems.FindIndex(item => item.Name == name));
@@ -43,6 +38,21 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             // select SQL query
             return tourItems;
+        }
+
+        public string CreateImage(string from, string to, string path = "No path")
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteImage(string path = "No path")
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveImagePath(string path, string deletePath = "No path")
+        {
+            throw new NotImplementedException();
         }
     }
 }
