@@ -10,6 +10,8 @@ namespace SWE2TourPlanner.DataAccessLayer
         public List<TourItem> GetItems();
         public void AddItem(string name, string description, string from, string to, string imagePath);
         public void DeleteItem(string name);
-        public string CreateImage(string from, string to);
+        public string CreateImage(string from, string to, string path = "No path");
+        public void DeleteImage(string path = "No path");
+        public void SaveImagePath(string path, string deletePath = "No path");
     }
 }

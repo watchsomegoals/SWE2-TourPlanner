@@ -1,7 +1,9 @@
-﻿using SWE2TourPlanner.DataAccessLayer;
+﻿using Newtonsoft.Json;
+using SWE2TourPlanner.DataAccessLayer;
 using SWE2TourPlanner.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -24,9 +26,15 @@ namespace SWE2TourPlanner.BusinessLayer
             databaseTourItemDAO.AddItem(name, description, from, to, imagePath);
         }
 
-        public void DeleteItem(string name)
+        public void DeleteItemAndSavePath(string name, string path)
         {
+            filesystemTourItemDAO.SaveImagePath(path);
             databaseTourItemDAO.DeleteItem(name);
+        }
+
+        public void DeleteImages()
+        {
+            filesystemTourItemDAO.DeleteImage();
         }
 
         public IEnumerable<TourItem> GetItems()

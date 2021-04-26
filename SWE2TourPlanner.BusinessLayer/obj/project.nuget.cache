@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1dMD+PuUO3VfWNYxDygiXUJ0q/2AyvQCQu0SzvjzKONbHm7+Aqv53HysR25XGutnyD3WwD6uXJkbD1Mtm/P7gw==",
+  "dgSpecHash": "nzQ+dsDxGVna87SZuysSsNcQyVokS44aKcZIHlE4YcalJza3gVHvI4jR5Ezr+w3QRUnT0+sxf9+1Z9SlrXNjMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner.BusinessLayer\\SWE2TourPlanner.BusinessLayer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Lucian\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
