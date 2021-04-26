@@ -125,16 +125,18 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Logs" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                        <Button Content="+" Grid.Column="7" Margin="1"/>
+                        <Button Content="+" Grid.Column="7" Margin="1"
+                                Command="{Binding PopUpAddLogCommand}"/>
                         <Button Content="-" Grid.Column="8" Margin="1"/>
                         <Button Content="..." Grid.Column="9" Margin="1,1,0,1"/>
 
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" BorderBrush="Black" BorderThickness="1"/>
-                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10">
+                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10"
+                                  ItemsSource="{Binding LogItems}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="date/time" />
-                                <DataGridTextColumn Header="report" />
-                                <DataGridTextColumn Header="distance" />
+                                <DataGridTextColumn Binding="{Binding DateTime}" Header="date/time" />
+                                <DataGridTextColumn Binding="{Binding Report}" Header="report" />
+                                <DataGridTextColumn Binding="{Binding Distance}" Header="distance" />
                                 <DataGridTextColumn Header="total time" />
                                 <DataGridTextColumn Header="rating" />
                                 <DataGridTextColumn Header="avg speed" />

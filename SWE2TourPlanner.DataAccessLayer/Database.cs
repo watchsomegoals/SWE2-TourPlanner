@@ -9,6 +9,7 @@ namespace SWE2TourPlanner.DataAccessLayer
     {
         private string connectionString;
         private List<TourItem> tourItems = new List<TourItem>();
+        private List<LogItem> logItems = new List<LogItem>();
 
         public Database()
         {
@@ -29,9 +30,35 @@ namespace SWE2TourPlanner.DataAccessLayer
             });
         }
 
+        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        {
+            //int index = tourItems.FindIndex(a => a == currentTour);
+
+            //tourItems[index].LogItems.Add(new LogItem()
+            //{
+            //    DateTime = dateTime,
+            //    Report = report,
+            //    Distance = distance,
+            //    TotalTime = totalTime
+            //});
+            logItems.Add(new LogItem()
+            {
+                DateTime = dateTime,
+                Report = report,
+                Distance = distance,
+                TotalTime = totalTime,
+                Touritem = currentTour
+            });
+        }
+
         public void DeleteItem(string name)
         {
             tourItems.RemoveAt(tourItems.FindIndex(item => item.Name == name));
+        }
+
+        public List<LogItem> GetLogs()
+        {
+            return logItems;
         }
 
         public List<TourItem> GetItems()

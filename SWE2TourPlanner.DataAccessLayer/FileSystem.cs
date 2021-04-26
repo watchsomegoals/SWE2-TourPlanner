@@ -11,15 +11,19 @@ namespace SWE2TourPlanner.DataAccessLayer
     {
         private string picturesfolderPath;
         private string toDeleteFilePath;
+        private ConfigFile configFile;
 
         public string PicturesFolderPath { get; set; }
         public string ToDeleteFilePath { get; set; }
 
         public FileSystem()
         {
+            string path = "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\config.json";
+            string json = File.ReadAllText(path);
+            this.configFile = JsonConvert.DeserializeObject<ConfigFile>(json);
             // get filepath from config file
-            this.picturesfolderPath = "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\Pictures\\";
-            this.toDeleteFilePath = "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\ToDelete.txt";
+            this.picturesfolderPath = configFile.PicturesFolderPath;
+            this.toDeleteFilePath = configFile.ToDeleteFilePath;
         }
 
         public void AddItem(string name, string description, string from, string to, string imagePath)
@@ -29,7 +33,7 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public string CreateImage(string from, string to, string path = "No path")
         {
-            string key = "k7iKP1Ze0UVSxBLxw4wDlsgFJqfMZZRJ";
+            string key = configFile.Key;
             string imageNumber;
             string imageFilePath;
             string url = @"https://www.mapquestapi.com/staticmap/v5/map?start=" + from + "&end=" + to + "&size=600,400@2x&key=" + key;
@@ -104,6 +108,16 @@ namespace SWE2TourPlanner.DataAccessLayer
         }
 
         public List<TourItem> GetItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<LogItem> GetLogs()
         {
             throw new NotImplementedException();
         }

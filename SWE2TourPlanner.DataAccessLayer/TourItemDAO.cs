@@ -36,6 +36,10 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             return dataAccess.GetItems();
         }
+        public List<LogItem> GetLogs()
+        {
+            return dataAccess.GetLogs();
+        }
 
         public void AddItem(string name, string description, string from, string to, string imagePath)
         {
@@ -55,6 +59,11 @@ namespace SWE2TourPlanner.DataAccessLayer
         public void SaveImagePath(string path)
         {
             dataAccess.SaveImagePath(path);
+        }
+
+        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        {
+            dataAccess.AddLog(currentTour, dateTime, report, distance, totalTime);
         }
     }
 }
