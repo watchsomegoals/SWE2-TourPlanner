@@ -18,22 +18,17 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public FileSystem()
         {
-            string path = "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\config.json";
+            string path = "configFile.json";
             string json = File.ReadAllText(path);
             this.configFile = JsonConvert.DeserializeObject<ConfigFile>(json);
             // get filepath from config file
-            this.picturesfolderPath = configFile.PicturesFolderPath;
-            this.toDeleteFilePath = configFile.ToDeleteFilePath;
-        }
-
-        public void AddItem(string name, string description, string from, string to, string imagePath)
-        {
-            throw new NotImplementedException();
+            this.picturesfolderPath = configFile.FsSettings.PicturesFolderPath;
+            this.toDeleteFilePath = configFile.FsSettings.ToDeleteFilePath;
         }
 
         public string CreateImage(string from, string to, string path = "No path")
         {
-            string key = configFile.Key;
+            string key = configFile.FsSettings.Key;
             string imageNumber;
             string imageFilePath;
             string url = @"https://www.mapquestapi.com/staticmap/v5/map?start=" + from + "&end=" + to + "&size=600,400@2x&key=" + key;
@@ -118,6 +113,11 @@ namespace SWE2TourPlanner.DataAccessLayer
         }
 
         public List<LogItem> GetLogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddItem(string name, string from, string to, string imagePath)
         {
             throw new NotImplementedException();
         }

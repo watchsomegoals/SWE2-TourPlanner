@@ -14,8 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SWE2TourPlanner.BusinessLayer\SWE2TourPlanner.BusinessLayer.csproj" />
     <ProjectReference Include="..\SWE2TourPlanner.Models\SWE2TourPlanner.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="configFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

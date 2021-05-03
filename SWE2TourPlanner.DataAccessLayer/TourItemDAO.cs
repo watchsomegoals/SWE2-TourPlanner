@@ -41,9 +41,9 @@ namespace SWE2TourPlanner.DataAccessLayer
             return dataAccess.GetLogs();
         }
 
-        public void AddItem(string name, string description, string from, string to, string imagePath)
+        public void AddItem(string name, string from, string to, string imagePath)
         {
-            dataAccess.AddItem(name, description, from, to, imagePath);
+            dataAccess.AddItem(name, from, to, imagePath);
         }
 
         public void DeleteItem(string name)
