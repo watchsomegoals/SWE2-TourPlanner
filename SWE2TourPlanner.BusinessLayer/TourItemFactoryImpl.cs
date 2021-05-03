@@ -20,10 +20,10 @@ namespace SWE2TourPlanner.BusinessLayer
             filesystemTourItemDAO = new TourItemDAO(DataType.Filesystem);
         }
 
-        public void AddItem(string name, string description, string from, string to)
+        public void AddItem(string name, string from, string to)
         {
             string imagePath = filesystemTourItemDAO.CreateImage(from, to);
-            databaseTourItemDAO.AddItem(name, description, from, to, imagePath);
+            databaseTourItemDAO.AddItem(name, from, to, imagePath);
         }
 
         public void DeleteItemAndSavePath(string name, string path)

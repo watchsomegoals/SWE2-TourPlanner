@@ -75,8 +75,12 @@ namespace SWE2TourPlanner.ViewModels
 
         private void AddTour(object commandParameter)
         {
-            this.tourItemFactory.AddItem(NewTourText, Description, From, To);
+            this.tourItemFactory.AddItem(NewTourText, From, To);
             var window = (Window)commandParameter;
+            NewTourText = string.Empty;
+            From = string.Empty;
+            To = string.Empty;
+            //Description = string.Empty;
             window.Close();
         }
 
