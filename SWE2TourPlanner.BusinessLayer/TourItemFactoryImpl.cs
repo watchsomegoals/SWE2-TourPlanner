@@ -26,10 +26,10 @@ namespace SWE2TourPlanner.BusinessLayer
             databaseTourItemDAO.AddItem(name, from, to, imagePath);
         }
 
-        public void DeleteItemAndSavePath(string name, string path)
+        public void DeleteItemAndSavePath(int tourid, string path)
         {
             filesystemTourItemDAO.SaveImagePath(path);
-            databaseTourItemDAO.DeleteItem(name);
+            databaseTourItemDAO.DeleteItem(tourid);
         }
 
         public void DeleteImages()
@@ -42,9 +42,9 @@ namespace SWE2TourPlanner.BusinessLayer
             return databaseTourItemDAO.GetItems();
         }
 
-        public IEnumerable<LogItem> GetLogs()
+        public IEnumerable<LogItem> GetLogs(int tourid)
         {
-            return databaseTourItemDAO.GetLogs();
+            return databaseTourItemDAO.GetLogs(tourid);
         }
 
         public IEnumerable<TourItem> Search(string itemName, bool caseSensitive = false)
@@ -58,9 +58,9 @@ namespace SWE2TourPlanner.BusinessLayer
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
         }
 
-        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
         {
-            databaseTourItemDAO.AddLog(currentTour, dateTime, report, distance, totalTime);
+            databaseTourItemDAO.AddLog(tourid, dateTime, report, distance, totalTime);
         }
     }
 }

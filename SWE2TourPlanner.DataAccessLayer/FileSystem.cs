@@ -97,7 +97,7 @@ namespace SWE2TourPlanner.DataAccessLayer
             File.WriteAllText(deletePath, output);
         }
 
-        public void DeleteItem(string name)
+        public void DeleteItem(int tourid)
         {
             throw new NotImplementedException();
         }
@@ -107,12 +107,12 @@ namespace SWE2TourPlanner.DataAccessLayer
             throw new NotImplementedException();
         }
 
-        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
         {
             throw new NotImplementedException();
         }
 
-        public List<LogItem> GetLogs()
+        public List<LogItem> GetLogs(int tourid)
         {
             throw new NotImplementedException();
         }

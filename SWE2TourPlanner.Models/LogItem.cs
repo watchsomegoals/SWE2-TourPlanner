@@ -6,10 +6,11 @@ namespace SWE2TourPlanner.Models
 {
     public class LogItem
     {
+        public int LogId { get; set; }
         public string DateTime { get; set; }
         public string Report { get; set; }
         public string Distance { get; set; }
         public string TotalTime { get; set; }
-        public TourItem Touritem { get; set; }
+        public int TourId { get; set; }
     }
 }

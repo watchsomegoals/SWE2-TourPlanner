@@ -36,9 +36,9 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             return dataAccess.GetItems();
         }
-        public List<LogItem> GetLogs()
+        public List<LogItem> GetLogs(int tourid)
         {
-            return dataAccess.GetLogs();
+            return dataAccess.GetLogs(tourid);
         }
 
         public void AddItem(string name, string from, string to, string imagePath)
@@ -46,9 +46,9 @@ namespace SWE2TourPlanner.DataAccessLayer
             dataAccess.AddItem(name, from, to, imagePath);
         }
 
-        public void DeleteItem(string name)
+        public void DeleteItem(int tourid)
         {
-            dataAccess.DeleteItem(name);
+            dataAccess.DeleteItem(tourid);
         }
 
         public void DeleteImage()
@@ -61,9 +61,9 @@ namespace SWE2TourPlanner.DataAccessLayer
             dataAccess.SaveImagePath(path);
         }
 
-        public void AddLog(TourItem currentTour, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
         {
-            dataAccess.AddLog(currentTour, dateTime, report, distance, totalTime);
+            dataAccess.AddLog(tourid, dateTime, report, distance, totalTime);
         }
     }
 }

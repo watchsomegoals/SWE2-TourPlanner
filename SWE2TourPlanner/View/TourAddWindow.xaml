@@ -36,7 +36,7 @@
 -->
             <Button Content="Add" Command="{Binding AddTourCommand}" 
                     CommandParameter="{Binding RelativeSource={
-                    RelativeSource AncestorType={x:Type Window}}}" Margin="120,30,120,0"/>
+                    RelativeSource AncestorType={x:Type Window}}}" Margin="120,270,120,0"/>
         </StackPanel>
         
     </Grid>

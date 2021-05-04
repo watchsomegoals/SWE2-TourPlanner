@@ -2,6 +2,7 @@
 using SWE2TourPlanner.Models;
 using SWE2TourPlanner.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,14 +18,19 @@ namespace SWE2TourPlanner.ViewModels
     {
         private ITourItemFactory tourItemFactory;
         private TourItem currentItem;
+        private string searchText;
 
         private ICommand popUpAddCommand;
         private ICommand deleteTourCommand;
         private ICommand popUpAddLogCommand;
+        private ICommand searchCommand;
+        private ICommand clearCommand;
 
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
         public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
         public ICommand PopUpAddLogCommand => popUpAddLogCommand ??= new RelayCommand(PopUpAddLog);
+        public ICommand SearchCommand => searchCommand ??= new RelayCommand(Search);
+        public ICommand ClearCommand => clearCommand ??= new RelayCommand(Clear);
 
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
@@ -45,6 +51,8 @@ namespace SWE2TourPlanner.ViewModels
                 {
                     currentItem = value;
                     RaisePropertyChangedEvent(nameof(CurrentItem));
+                    LogItems.Clear();
+                    FillDataGrid(CurrentItem.TourId);
                 }
             }
         }
@@ -60,12 +68,11 @@ namespace SWE2TourPlanner.ViewModels
         private void InitDataGrid()
         {
             LogItems = new ObservableCollection<LogItem>();
-            FillDataGrid();
         }
 
-        private void FillDataGrid()
+        private void FillDataGrid(int tourid)
         {
-            foreach (LogItem item in this.tourItemFactory.GetLogs())
+            foreach (LogItem item in this.tourItemFactory.GetLogs(tourid))
             {
                 LogItems.Add(item);
             }
@@ -111,15 +118,45 @@ namespace SWE2TourPlanner.ViewModels
                 view.ShowDialog();
 
                 LogItems.Clear();
-                FillDataGrid();
+                FillDataGrid(CurrentItem.TourId);
             }
         }
 
         private void DeleteTour(object commandParameter)
         {
             string path = CurrentItem.ImagePath;
-            this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.Name, path);
+            this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.TourId, path);
             TourItems.Clear();
+            FillListBox();
+        }
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                if (searchText != value)
+                {
+                    searchText = value;
+                    RaisePropertyChangedEvent(nameof(SearchText));
+                }
+            }
+        }
+
+        private void Search(object commandParameter)
+        {
+            IEnumerable foundItems = this.tourItemFactory.Search(SearchText);
+            TourItems.Clear();
+            foreach (TourItem item in foundItems)
+            {
+                TourItems.Add(item);
+            }
+        }
+
+        private void Clear(object commandParameter)
+        {
+            TourItems.Clear();
+            SearchText = "";
             FillListBox();
         }
     }
