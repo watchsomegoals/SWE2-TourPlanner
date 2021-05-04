@@ -94,7 +94,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void AddLog(object commandParameter)
         {
-            this.tourItemFactory.AddLog(CurrentTour, DateTime, Report, Distance, TotalTime);
+            this.tourItemFactory.AddLog(CurrentTour.TourId, DateTime, Report, Distance, TotalTime);
             var window = (Window)commandParameter;
             window.Close();
         }

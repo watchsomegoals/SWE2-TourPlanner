@@ -51,8 +51,16 @@
 
                 <!-- SEARCH BAR  -->
                 <TextBox Grid.ColumnSpan="3" Grid.Row="1"
-                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Margin="30,0,30,0" Content="Search" Grid.Row="1" Grid.Column="3" />
+                         Text="{Binding SearchText, Mode=TwoWay}"/>
+                <Grid Grid.Row="1" Grid.Column="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Margin="30,0,15,0" Grid.Column="0" Content="Search" Command="{Binding SearchCommand}"/>
+                    <Button Margin="15,0,30,0" Grid.Column="1" Content="Clear" Command="{Binding ClearCommand}"/>
+                </Grid>
+                
 
                 <!-- TOURS -->
                 <Grid Grid.Row="2" Grid.Column="0">
@@ -137,7 +145,7 @@
                                 <DataGridTextColumn Binding="{Binding DateTime}" Header="date/time" />
                                 <DataGridTextColumn Binding="{Binding Report}" Header="report" />
                                 <DataGridTextColumn Binding="{Binding Distance}" Header="distance" />
-                                <DataGridTextColumn Header="total time" />
+                                <DataGridTextColumn Binding="{Binding TotalTime}" Header="total time" />
                                 <DataGridTextColumn Header="rating" />
                                 <DataGridTextColumn Header="avg speed" />
                                 <DataGridTextColumn Header="inclination" />
