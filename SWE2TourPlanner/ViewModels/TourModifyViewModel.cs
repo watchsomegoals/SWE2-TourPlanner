@@ -1,24 +1,24 @@
 ﻿using SWE2TourPlanner.BusinessLayer;
 using SWE2TourPlanner.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace SWE2TourPlanner.ViewModels
 {
-    public class TourAddViewModel : ViewModelBase
+    public class TourModifyViewModel : ViewModelBase
     {
-        private string newTourText;
-        private string from;
-        private string to;
         private string description;
         private RouteType currentRoute;
+        private TourItem currentTour;
         private ITourItemFactory tourItemFactory;
-        private ICommand addTourCommand;
+        private ICommand modifyTourCommand;
 
-        public ICommand AddTourCommand => addTourCommand ??= new RelayCommand(AddTour);
-
+        public ICommand ModifyTourCommand => modifyTourCommand ??= new RelayCommand(ModifyTour);
+        
         public ObservableCollection<RouteType> RouteItems { get; set; }
 
         public RouteType CurrentRoute
@@ -37,41 +37,15 @@ namespace SWE2TourPlanner.ViewModels
             }
         }
 
-        public string NewTourText
+        public TourItem CurrentTour
         {
-            get { return newTourText; }
+            get { return currentTour; }
             set
             {
-                if ((newTourText != value) && (value != null))
+                if ((currentTour != value) && (value != null))
                 {
-                    newTourText = value;
-                    RaisePropertyChangedEvent(nameof(NewTourText));
-                }
-            }
-        }
-
-        public string From
-        {
-            get { return from; }
-            set
-            {
-                if ((from != value) && (value != null))
-                {
-                    from = value;
-                    RaisePropertyChangedEvent(nameof(From));
-                }
-            }
-        }
-
-        public string To
-        {
-            get { return to; }
-            set
-            {
-                if ((to != value) && (value != null))
-                {
-                    to = value;
-                    RaisePropertyChangedEvent(nameof(To));
+                    currentTour = value;
+                    RaisePropertyChangedEvent(nameof(CurrentTour));
                 }
             }
         }
@@ -89,7 +63,7 @@ namespace SWE2TourPlanner.ViewModels
             }
         }
 
-        public TourAddViewModel()
+        public TourModifyViewModel()
         {
             this.tourItemFactory = TourItemFactory.GetInstance();
             InitRouteTypes();
@@ -106,16 +80,11 @@ namespace SWE2TourPlanner.ViewModels
             };
         }
 
-        private void AddTour(object commandParameter)
+        private void ModifyTour(object commandParameter)
         {
-            this.tourItemFactory.AddItem(NewTourText, From, To, Description, CurrentRoute.TypeRoute);
+            this.tourItemFactory.ModifyTour(CurrentTour, Description, CurrentRoute.TypeRoute);
             var window = (Window)commandParameter;
-            NewTourText = string.Empty;
-            From = string.Empty;
-            To = string.Empty;
-            Description = string.Empty;
             window.Close();
         }
-
     }
 }

@@ -27,15 +27,12 @@ namespace SWE2TourPlanner.DataAccessLayer
             // get connection data e.g. from config file
             connectionString = "Host=" + this.configFile.DbSettings.Host + ";Username=" + this.configFile.DbSettings.Username + ";Password=" + 
                                 this.configFile.DbSettings.Password + ";Database=" + this.configFile.DbSettings.Database + ";Port=" + this.configFile.DbSettings.Port;
-            // establish connection with db
         }
 
-        public void AddItem(string name, string from, string to, string imagePath)
+        public void AddItem(string name, string from, string to, string imagePath, string description, string route)
         {
             int tourId = 0;
-            string description = null;
-            string routeType = "bicycle";
-            string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + from + "&to=" + to + "&routeType=" + routeType;
+            string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + from + "&to=" + to + "&routeType=" + route;
 
             using (var webClient = new System.Net.WebClient())
             {
@@ -46,22 +43,21 @@ namespace SWE2TourPlanner.DataAccessLayer
                 string str = time.ToString(@"hh\:mm\:ss");
                 reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
 
-                description = "Distance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
-                              "\nFrom: " + from + "\nTo: " + to;
+                description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
+                              "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: "+ route +"\nFrom: " + from + "\nTo: " + to;
              
                 tourId = GetTourItemIdForInsert();
 
-                InsertTour(tourId, name, description, from, to, imagePath);
-                
+                InsertTour(tourId, name, description, from, to, imagePath, route);
             }
         }
 
-        public void InsertTour(int tourId, string name, string description, string from, string to, string imagePath)
+        public void InsertTour(int tourId, string name, string description, string from, string to, string imagePath, string route)
         {
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             conn.Open();
 
-            string strcomm = "INSERT INTO tours (tourid, name, description, startpoint, endpoint, path) VALUES (@tourid, @name, @description, @startpoint, @endpoint, @path)";
+            string strcomm = "INSERT INTO tours (tourid, name, description, startpoint, endpoint, path, route) VALUES (@tourid, @name, @description, @startpoint, @endpoint, @path, @route)";
             NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
 
             sqlcomm.Parameters.AddWithValue("tourid", tourId);
@@ -70,6 +66,7 @@ namespace SWE2TourPlanner.DataAccessLayer
             sqlcomm.Parameters.AddWithValue("startpoint", from);
             sqlcomm.Parameters.AddWithValue("endpoint", to);
             sqlcomm.Parameters.AddWithValue("path", imagePath);
+            sqlcomm.Parameters.AddWithValue("route", route);
             
             sqlcomm.Prepare();
             sqlcomm.ExecuteNonQuery();
@@ -104,13 +101,13 @@ namespace SWE2TourPlanner.DataAccessLayer
             }
         }
 
-        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
             int logId = GetLogItemIdForInsert();
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             conn.Open();
 
-            string strcomm = "INSERT INTO logs (logid, fk_tourid, datetime, report, distance, totaltime) VALUES (@logid, @fk_tourid, @datetime, @report, @distance, @totaltime)";
+            string strcomm = "INSERT INTO logs (logid, fk_tourid, datetime, report, distance, totaltime, rating, avgspeed, inclination, topspeed, maxheight, minheight) VALUES (@logid, @fk_tourid, @datetime, @report, @distance, @totaltime, @rating, @avgspeed, @inclination, @topspeed, @maxheight, @minheight)";
             NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
 
             sqlcomm.Parameters.AddWithValue("logid", logId);
@@ -119,22 +116,17 @@ namespace SWE2TourPlanner.DataAccessLayer
             sqlcomm.Parameters.AddWithValue("report", report);
             sqlcomm.Parameters.AddWithValue("distance", distance);
             sqlcomm.Parameters.AddWithValue("totaltime", totalTime);
-            
+            sqlcomm.Parameters.AddWithValue("rating", rating);
+            sqlcomm.Parameters.AddWithValue("avgspeed", avgSpeed);
+            sqlcomm.Parameters.AddWithValue("inclination", inclination);
+            sqlcomm.Parameters.AddWithValue("topspeed", topSpeed);
+            sqlcomm.Parameters.AddWithValue("maxheight", maxHeight);
+            sqlcomm.Parameters.AddWithValue("minheight", minHeight);
+
             sqlcomm.Prepare();
             sqlcomm.ExecuteNonQuery();
 
             conn.Close();
-
-            /*
-            logItems.Add(new LogItem()
-            {
-                DateTime = dateTime,
-                Report = report,
-                Distance = distance,
-                TotalTime = totalTime,
-                TourId = tourid
-            });
-            */
         }
 
         public int GetLogItemIdForInsert()
@@ -171,10 +163,30 @@ namespace SWE2TourPlanner.DataAccessLayer
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             conn.Open();
 
+            string logdelete = "Delete from logs where fk_tourid = @tourid";
+            NpgsqlCommand sqllogdelete = new NpgsqlCommand(logdelete, conn);
+            sqllogdelete.Parameters.AddWithValue("tourid", tourid);
+            sqllogdelete.Prepare();
+            sqllogdelete.ExecuteNonQuery();
+
             string strdelete = "Delete from tours where tourid = @tourid";
             NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
-
             sqldelete.Parameters.AddWithValue("tourid", tourid);
+            sqldelete.Prepare();
+            sqldelete.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public void DeleteLog(int logid)
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strdelete = "Delete from logs where logid = @logid";
+            NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
+
+            sqldelete.Parameters.AddWithValue("logid", logid);
             sqldelete.Prepare();
             sqldelete.ExecuteNonQuery();
 
@@ -202,7 +214,13 @@ namespace SWE2TourPlanner.DataAccessLayer
                     DateTime = reader.GetString(2),
                     Report = reader.GetString(3),
                     Distance = reader.GetString(4),
-                    TotalTime = reader.GetString(5)
+                    TotalTime = reader.GetString(5),
+                    Rating = reader.GetString(6),
+                    AvgSpeed = reader.GetString(7),
+                    Inclination = reader.GetString(8),
+                    TopSpeed = reader.GetString(9),
+                    MaxHeight = reader.GetString(10),
+                    MinHeight = reader.GetString(11)
                 });
             }
             conn.Close();
@@ -230,12 +248,42 @@ namespace SWE2TourPlanner.DataAccessLayer
                     Description = reader.GetString(2),
                     From = reader.GetString(3),
                     To = reader.GetString(4),
-                    ImagePath = reader.GetString(5)
+                    ImagePath = reader.GetString(5),
+                    Route = reader.GetString(6)
                 });
             }
             conn.Close();
             
             return tourItems;
+        }
+
+        public void ModifyTour(TourItem currentTour, string description, string route)
+        {
+            string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + currentTour.From + "&to=" + currentTour.To + "&routeType=" + route;
+
+            using (var webClient = new System.Net.WebClient())
+            {
+                var json = webClient.DownloadString(url);
+                RequestData reqObj = JsonConvert.DeserializeObject<RequestData>(json);
+
+                TimeSpan time = TimeSpan.FromSeconds(reqObj.route.Time);
+                string str = time.ToString(@"hh\:mm\:ss");
+                reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
+
+                description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
+                              "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: " + route + "\nFrom: " + currentTour.From + "\nTo: " + currentTour.To;
+            }
+
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string updatetours = "Update tours set description = @description, route = @route where tourid = @tourid";
+            NpgsqlCommand sqlupdate = new NpgsqlCommand(updatetours, conn);
+            sqlupdate.Parameters.AddWithValue("description", description);
+            sqlupdate.Parameters.AddWithValue("route", route);
+            sqlupdate.Parameters.AddWithValue("tourid", currentTour.TourId);
+            sqlupdate.Prepare();
+            sqlupdate.ExecuteNonQuery();
         }
 
         public string CreateImage(string from, string to, string path = "No path")

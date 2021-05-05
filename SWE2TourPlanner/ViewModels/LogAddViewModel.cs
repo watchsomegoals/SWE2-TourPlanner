@@ -14,6 +14,12 @@ namespace SWE2TourPlanner.ViewModels
         private string report;
         private string distance;
         private string totalTime;
+        private string rating;
+        private string avgSpeed;
+        private string inclination;
+        private string topSpeed;
+        private string maxHeight;
+        private string minHeight;
         private TourItem currentTour;
         
 
@@ -87,6 +93,84 @@ namespace SWE2TourPlanner.ViewModels
             }
         }
 
+        public string Rating
+        {
+            get { return rating; }
+            set
+            {
+                if ((rating != value) && (value != null))
+                {
+                    rating = value;
+                    RaisePropertyChangedEvent(nameof(Rating));
+                }
+            }
+        }
+
+        public string AvgSpeed
+        {
+            get { return avgSpeed; }
+            set
+            {
+                if ((avgSpeed != value) && (value != null))
+                {
+                    avgSpeed = value;
+                    RaisePropertyChangedEvent(nameof(AvgSpeed));
+                }
+            }
+        }
+
+        public string Inclination
+        {
+            get { return inclination; }
+            set
+            {
+                if ((inclination != value) && (value != null))
+                {
+                    inclination = value;
+                    RaisePropertyChangedEvent(nameof(Inclination));
+                }
+            }
+        }
+
+        public string TopSpeed
+        {
+            get { return topSpeed; }
+            set
+            {
+                if ((topSpeed != value) && (value != null))
+                {
+                    topSpeed = value;
+                    RaisePropertyChangedEvent(nameof(TopSpeed));
+                }
+            }
+        }
+
+        public string MaxHeight
+        {
+            get { return maxHeight; }
+            set
+            {
+                if ((maxHeight != value) && (value != null))
+                {
+                    maxHeight = value;
+                    RaisePropertyChangedEvent(nameof(MaxHeight));
+                }
+            }
+        }
+
+        public string MinHeight
+        {
+            get { return minHeight; }
+            set
+            {
+                if ((minHeight != value) && (value != null))
+                {
+                    minHeight = value;
+                    RaisePropertyChangedEvent(nameof(MinHeight));
+                }
+            }
+        }
+
         public LogAddViewModel()
         {
             this.tourItemFactory = TourItemFactory.GetInstance();
@@ -94,7 +178,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void AddLog(object commandParameter)
         {
-            this.tourItemFactory.AddLog(CurrentTour.TourId, DateTime, Report, Distance, TotalTime);
+            this.tourItemFactory.AddLog(CurrentTour.TourId, DateTime, Report, Distance, TotalTime, Rating, AvgSpeed, Inclination, TopSpeed, MaxHeight, MinHeight);
             var window = (Window)commandParameter;
             window.Close();
         }

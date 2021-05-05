@@ -33,3 +33,7 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SWE2TourPlanner.dll.config
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\log4net.dll
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Npgsql.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\TourModifyWindow.g.cs
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\TourModifyWindow.baml
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogModifyWindow.g.cs
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogModifyWindow.baml

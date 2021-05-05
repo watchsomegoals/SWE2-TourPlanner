@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\App.xaml
-31910143512
+5867718655
 
-10-1997616324
+141176021143
 198-1712130113
-MainWindow.xaml;View\LogAddWindow.xaml;View\TourAddWindow.xaml;
+MainWindow.xaml;View\LogAddWindow.xaml;View\LogModifyWindow.xaml;View\TourAddWindow.xaml;View\TourModifyWindow.xaml;
 
 False
 

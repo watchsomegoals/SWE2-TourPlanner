@@ -18,26 +18,50 @@ namespace SWE2TourPlanner.ViewModels
     {
         private ITourItemFactory tourItemFactory;
         private TourItem currentItem;
+        private LogItem currentLog;
         private string searchText;
 
         private ICommand popUpAddCommand;
         private ICommand deleteTourCommand;
+        private ICommand popUpModifyTourCommand;
         private ICommand popUpAddLogCommand;
+        private ICommand deleteLogCommand;
+        private ICommand popUpModifyLogCommand;
         private ICommand searchCommand;
         private ICommand clearCommand;
 
+
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
         public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
+        public ICommand PopUpModifyTourCommand => popUpModifyTourCommand ??= new RelayCommand(PopUpModify);
         public ICommand PopUpAddLogCommand => popUpAddLogCommand ??= new RelayCommand(PopUpAddLog);
+        public ICommand DeleteLogCommand => deleteLogCommand ??= new RelayCommand(DeleteLog);
+        public ICommand PopUpModifyLogCommand => popUpModifyLogCommand ??= new RelayCommand(PopUpModifyLog);
         public ICommand SearchCommand => searchCommand ??= new RelayCommand(Search);
         public ICommand ClearCommand => clearCommand ??= new RelayCommand(Clear);
 
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
+        public TourModifyViewModel tourModifyViewModel;
 
         public ObservableCollection<TourItem> TourItems { get; set; }
-
         public ObservableCollection<LogItem> LogItems { get; set; }
+
+        public LogItem CurrentLog
+        {
+            get
+            {
+                return currentLog;
+            }
+            set
+            {
+                if ((currentLog != value) && (value != null))
+                {
+                    currentLog = value;
+                    RaisePropertyChangedEvent(nameof(CurrentLog));
+                }
+            }
+        }
 
         public TourItem CurrentItem
         {
@@ -128,6 +152,38 @@ namespace SWE2TourPlanner.ViewModels
             this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.TourId, path);
             TourItems.Clear();
             FillListBox();
+            LogItems.Clear();
+        }
+
+        private void DeleteLog(object commandParameter)
+        {
+            this.tourItemFactory.DeleteLog(CurrentLog.LogId);
+            LogItems.Clear();
+            FillDataGrid(CurrentItem.TourId);
+        }
+
+        private void PopUpModify(object commandParameter)
+        {
+            if(CurrentItem != null)
+            {
+                this.tourModifyViewModel = new TourModifyViewModel();
+                tourModifyViewModel.CurrentTour = CurrentItem;
+                TourModifyWindow view = new TourModifyWindow();
+                view.DataContext = this.tourModifyViewModel;
+
+                view.ShowDialog();
+
+                TourItems.Clear();
+                FillListBox();
+            }
+        }
+
+        private void PopUpModifyLog(object commandParameter)
+        {
+            if (CurrentLog != null)
+            {
+
+            }
         }
 
         public string SearchText

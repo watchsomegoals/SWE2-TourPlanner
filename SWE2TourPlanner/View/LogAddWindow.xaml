@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LogAddViewModel}"
         mc:Ignorable="d"
-        Title="LogAddWindow" Height="500" Width="800">
+        Title="LogAddWindow" Height="350" Width="800">
     <Grid>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="0,0,15,0">
             <Label Content="Enter Date/Time:"/>
             <TextBox Text="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -24,13 +29,43 @@
             <Label Content="Enter Distance:"/>
             <TextBox Text="{Binding Distance, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Content="Enter Total time:"/>
+            <Label Content="Enter Total Time:"/>
             <TextBox Text="{Binding TotalTime, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Button Content="Add" Command="{Binding AddLogCommand}" 
-                    CommandParameter="{Binding RelativeSource={
-                    RelativeSource AncestorType={x:Type Window}}}" Margin="120,220,120,0"/>
+            <Label Content="Enter Rating:"/>
+            <TextBox Text="{Binding Rating, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
+
+        <StackPanel Grid.Column="2" Margin="15,0,0,0">
+            <Label Content="Enter Average Speed:"/>
+            <TextBox Text="{Binding AvgSpeed, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Inclination:"/>
+            <TextBox Text="{Binding Inclination, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Top Speed:"/>
+            <TextBox Text="{Binding TopSpeed, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Max Height:"/>
+            <TextBox Text="{Binding MaxHeight, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Enter Min Height:"/>
+            <TextBox Text="{Binding MinHeight, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1"
+                    Content="Add" Command="{Binding AddLogCommand}" 
+                    CommandParameter="{Binding RelativeSource={
+                    RelativeSource AncestorType={x:Type Window}}}" Margin="0,15,0,15"/>
+        </Grid>
+        
 
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ namespace SWE2TourPlanner.ViewModels
         protected void RaisePropertyChangedEvent([CallerMemberName] string propertyName ="")
         {
             ValidatePropertyName(propertyName);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected void ValidatePropertyName(string propertyName)

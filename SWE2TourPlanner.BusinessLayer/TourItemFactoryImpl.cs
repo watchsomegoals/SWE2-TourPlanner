@@ -20,10 +20,10 @@ namespace SWE2TourPlanner.BusinessLayer
             filesystemTourItemDAO = new TourItemDAO(DataType.Filesystem);
         }
 
-        public void AddItem(string name, string from, string to)
+        public void AddItem(string name, string from, string to, string description, string route)
         {
             string imagePath = filesystemTourItemDAO.CreateImage(from, to);
-            databaseTourItemDAO.AddItem(name, from, to, imagePath);
+            databaseTourItemDAO.AddItem(name, from, to, imagePath, description, route);
         }
 
         public void DeleteItemAndSavePath(int tourid, string path)
@@ -58,9 +58,20 @@ namespace SWE2TourPlanner.BusinessLayer
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
         }
 
-        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
-            databaseTourItemDAO.AddLog(tourid, dateTime, report, distance, totalTime);
+            databaseTourItemDAO.AddLog(tourid, dateTime, report, distance, totalTime, rating, avgSpeed, inclination, topSpeed, maxHeight, minHeight);
         }
+
+        public void DeleteLog(int logid)
+        {
+            databaseTourItemDAO.DeleteLog(logid);
+        }
+
+        public void ModifyTour(TourItem currentTour, string description, string route)
+        {
+            databaseTourItemDAO.ModifyTour(currentTour, description, route);
+        }
+
     }
 }
