@@ -98,3 +98,5 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\obj\Debug\netcoreapp3.1\
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\obj\Debug\netcoreapp3.1\NUnitTests.dll
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\obj\Debug\netcoreapp3.1\NUnitTests.pdb
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\obj\Debug\netcoreapp3.1\NUnitTests.genruntimeconfig.cache
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\bin\Debug\netcoreapp3.1\log4net.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\NUnitTests\bin\Debug\netcoreapp3.1\Npgsql.dll

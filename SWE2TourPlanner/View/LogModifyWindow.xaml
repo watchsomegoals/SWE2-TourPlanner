@@ -1,0 +1,43 @@
+﻿<Window x:Class="SWE2TourPlanner.View.LogModifyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LogModifyViewModel}"
+        mc:Ignorable="d"
+        Title="LogModifyWindow" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1">
+            
+            <Label Content="Choose New Route Type:"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox ItemsSource="{Binding Path=RouteItems}"
+                          SelectedItem="{Binding Path=CurrentRoute}"
+                          DisplayMemberPath="Display"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" 
+                Content="Modify" Command="{Binding ModifyLogCommand}" 
+                CommandParameter="{Binding RelativeSource={
+                RelativeSource AncestorType={x:Type Window}}}" Margin="0,60,0,0"/>
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</Window>

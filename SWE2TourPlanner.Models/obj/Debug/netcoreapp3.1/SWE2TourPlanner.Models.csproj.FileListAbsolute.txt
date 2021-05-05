@@ -6,4 +6,3 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.Models\obj\Debug\ne
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.Models\obj\Debug\netcoreapp3.1\SWE2TourPlanner.Models.csproj.CoreCompileInputs.cache
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.Models\obj\Debug\netcoreapp3.1\SWE2TourPlanner.Models.dll
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.Models\obj\Debug\netcoreapp3.1\SWE2TourPlanner.Models.pdb
-C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner.Models\obj\Debug\netcoreapp3.1\SWE2TourPlanner.Models.csprojAssemblyReference.cache

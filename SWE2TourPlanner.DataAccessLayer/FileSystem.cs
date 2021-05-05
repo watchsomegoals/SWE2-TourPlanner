@@ -107,7 +107,7 @@ namespace SWE2TourPlanner.DataAccessLayer
             throw new NotImplementedException();
         }
 
-        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
             throw new NotImplementedException();
         }
@@ -117,7 +117,17 @@ namespace SWE2TourPlanner.DataAccessLayer
             throw new NotImplementedException();
         }
 
-        public void AddItem(string name, string from, string to, string imagePath)
+        public void AddItem(string name, string from, string to, string imagePath, string description, string route)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteLog(int logid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ModifyTour(TourItem currentTour, string description, string route)
         {
             throw new NotImplementedException();
         }

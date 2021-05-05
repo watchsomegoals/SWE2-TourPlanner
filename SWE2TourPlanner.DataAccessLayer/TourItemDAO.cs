@@ -41,9 +41,9 @@ namespace SWE2TourPlanner.DataAccessLayer
             return dataAccess.GetLogs(tourid);
         }
 
-        public void AddItem(string name, string from, string to, string imagePath)
+        public void AddItem(string name, string from, string to, string imagePath, string description, string route)
         {
-            dataAccess.AddItem(name, from, to, imagePath);
+            dataAccess.AddItem(name, from, to, imagePath, description, route);
         }
 
         public void DeleteItem(int tourid)
@@ -61,9 +61,20 @@ namespace SWE2TourPlanner.DataAccessLayer
             dataAccess.SaveImagePath(path);
         }
 
-        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime)
+        public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
-            dataAccess.AddLog(tourid, dateTime, report, distance, totalTime);
+            dataAccess.AddLog(tourid, dateTime, report, distance, totalTime, rating, avgSpeed, inclination, topSpeed, maxHeight, minHeight);
         }
+
+        public void DeleteLog(int logid)
+        {
+            dataAccess.DeleteLog(logid);
+        }
+
+        public void ModifyTour(TourItem currentTour, string description, string route)
+        {
+            dataAccess.ModifyTour(currentTour, description, route);
+        }
+        
     }
 }
