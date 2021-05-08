@@ -73,5 +73,10 @@ namespace SWE2TourPlanner.BusinessLayer
             databaseTourItemDAO.ModifyTour(currentTour, description, route);
         }
 
+        public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
+        {
+            databaseTourItemDAO.ModifyLog(currentLog, typeLogData, newEntry);
+        }
+
     }
 }

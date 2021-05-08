@@ -131,5 +131,10 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

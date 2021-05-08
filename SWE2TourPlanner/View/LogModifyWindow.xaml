@@ -14,16 +14,25 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1">
             
-            <Label Content="Choose New Route Type:"/>
+            <Label Content="Choose Log Data Type:"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox ItemsSource="{Binding Path=RouteItems}"
-                          SelectedItem="{Binding Path=CurrentRoute}"
+                <ComboBox ItemsSource="{Binding Path=LogDataTypesItems}"
+                          SelectedItem="{Binding Path=CurrentLogDataType}"
                           DisplayMemberPath="Display"/>
             </Grid>
+
+            <Label Content="Enter New Log Data:"/>
+            <TextBox Height="100"
+                     Width="Auto"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto" 
+                     Text="{Binding NewEntry, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>

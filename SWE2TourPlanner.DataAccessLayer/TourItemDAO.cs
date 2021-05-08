@@ -75,6 +75,11 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             dataAccess.ModifyTour(currentTour, description, route);
         }
+
+        public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
+        {
+            dataAccess.ModifyLog(currentLog, typeLogData, newEntry);
+        }
         
     }
 }
