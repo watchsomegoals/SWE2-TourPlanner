@@ -16,5 +16,6 @@ namespace SWE2TourPlanner.BusinessLayer
         public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight);
         public void DeleteLog(int logid);
         public void ModifyTour(TourItem currentTour, string description, string route);
+        public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry);
     }
 }

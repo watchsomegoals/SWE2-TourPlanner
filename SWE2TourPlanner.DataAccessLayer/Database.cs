@@ -284,6 +284,104 @@ namespace SWE2TourPlanner.DataAccessLayer
             sqlupdate.Parameters.AddWithValue("tourid", currentTour.TourId);
             sqlupdate.Prepare();
             sqlupdate.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string updatelogs = null;
+
+            switch (typeLogData)
+            {
+                case "datetime":
+                    updatelogs = "Update logs set datetime = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupdate = new NpgsqlCommand(updatelogs, conn);
+                    sqlupdate.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupdate.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupdate.Prepare();
+                    sqlupdate.ExecuteNonQuery();
+                    break;
+                case "report":
+                    updatelogs = "Update logs set report = @newEntry where logid = @logid";
+                    NpgsqlCommand sqluprepo = new NpgsqlCommand(updatelogs, conn);
+                    sqluprepo.Parameters.AddWithValue("newEntry", newEntry);
+                    sqluprepo.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqluprepo.Prepare();
+                    sqluprepo.ExecuteNonQuery();
+                    break;
+                case "distance":
+                    updatelogs = "Update logs set distance = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupdist = new NpgsqlCommand(updatelogs, conn);
+                    sqlupdist.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupdist.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupdist.Prepare();
+                    sqlupdist.ExecuteNonQuery();
+                    break;
+                case "totaltime":
+                    updatelogs = "Update logs set totaltime = @newEntry where logid = @logid";
+                    NpgsqlCommand sqluptota = new NpgsqlCommand(updatelogs, conn);
+                    sqluptota.Parameters.AddWithValue("newEntry", newEntry);
+                    sqluptota.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqluptota.Prepare();
+                    sqluptota.ExecuteNonQuery();
+                    break;
+                case "rating":
+                    updatelogs = "Update logs set rating = @newEntry where logid = @logid";
+                    NpgsqlCommand sqluprati = new NpgsqlCommand(updatelogs, conn);
+                    sqluprati.Parameters.AddWithValue("newEntry", newEntry);
+                    sqluprati.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqluprati.Prepare();
+                    sqluprati.ExecuteNonQuery();
+                    break;
+                case "avgspeed":
+                    updatelogs = "Update logs set avgspeed = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupavgs = new NpgsqlCommand(updatelogs, conn);
+                    sqlupavgs.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupavgs.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupavgs.Prepare();
+                    sqlupavgs.ExecuteNonQuery();
+                    break;
+                case "inclination":
+                    updatelogs = "Update logs set inclination = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupincl = new NpgsqlCommand(updatelogs, conn);
+                    sqlupincl.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupincl.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupincl.Prepare();
+                    sqlupincl.ExecuteNonQuery();
+                    break;
+                case "topspeed":
+                    updatelogs = "Update logs set topspeed = @newEntry where logid = @logid";
+                    NpgsqlCommand sqluptops = new NpgsqlCommand(updatelogs, conn);
+                    sqluptops.Parameters.AddWithValue("newEntry", newEntry);
+                    sqluptops.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqluptops.Prepare();
+                    sqluptops.ExecuteNonQuery();
+                    break;
+                case "maxheight":
+                    updatelogs = "Update logs set maxheight = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupmaxh = new NpgsqlCommand(updatelogs, conn);
+                    sqlupmaxh.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupmaxh.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupmaxh.Prepare();
+                    sqlupmaxh.ExecuteNonQuery();
+                    break;
+                case "minheight":
+                    updatelogs = "Update logs set minheight = @newEntry where logid = @logid";
+                    NpgsqlCommand sqlupminh = new NpgsqlCommand(updatelogs, conn);
+                    sqlupminh.Parameters.AddWithValue("newEntry", newEntry);
+                    sqlupminh.Parameters.AddWithValue("logid", currentLog.LogId);
+                    sqlupminh.Prepare();
+                    sqlupminh.ExecuteNonQuery();
+                    break;
+                default:
+                    break;
+            }
+
+            conn.Close();
         }
 
         public string CreateImage(string from, string to, string path = "No path")

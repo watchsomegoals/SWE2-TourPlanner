@@ -43,6 +43,7 @@ namespace SWE2TourPlanner.ViewModels
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
         public TourModifyViewModel tourModifyViewModel;
+        public LogModifyViewModel logModifyViewModel;
 
         public ObservableCollection<TourItem> TourItems { get; set; }
         public ObservableCollection<LogItem> LogItems { get; set; }
@@ -122,12 +123,9 @@ namespace SWE2TourPlanner.ViewModels
             TourAddWindow view = new TourAddWindow();
             view.DataContext = new TourAddViewModel();
             view.ShowDialog();
-            //bool?dialogResult = view.ShowDialog();
-            //if(!(bool)dialogResult)
-            //{
-                TourItems.Clear();
-                FillListBox();
-            //}
+
+            TourItems.Clear();
+            FillListBox();
         }
 
         private void PopUpAddLog(object commandParameter)
@@ -182,7 +180,15 @@ namespace SWE2TourPlanner.ViewModels
         {
             if (CurrentLog != null)
             {
+                this.logModifyViewModel = new LogModifyViewModel();
+                logModifyViewModel.CurrentLog = CurrentLog;
+                LogModifyWindow view = new LogModifyWindow();
+                view.DataContext = this.logModifyViewModel;
 
+                view.ShowDialog();
+
+                LogItems.Clear();
+                FillDataGrid(CurrentItem.TourId);
             }
         }
 
