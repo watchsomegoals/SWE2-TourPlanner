@@ -80,6 +80,12 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             dataAccess.ModifyLog(currentLog, typeLogData, newEntry);
         }
-        
+
+        public void CreatePdf(TourItem tourItem, List<LogItem> logItems)
+        {
+            dataAccess.CreatePdf(tourItem, logItems);
+        }
+
+
     }
 }

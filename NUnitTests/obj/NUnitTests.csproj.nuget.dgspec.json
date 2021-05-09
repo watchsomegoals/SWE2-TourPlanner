@@ -123,6 +123,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Aspose.PDF": {
+              "target": "Package",
+              "version": "[21.4.0, )"
+            },
+            "Aspose.Words": {
+              "target": "Package",
+              "version": "[21.5.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"

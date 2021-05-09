@@ -77,6 +77,10 @@ namespace SWE2TourPlanner.BusinessLayer
         {
             databaseTourItemDAO.ModifyLog(currentLog, typeLogData, newEntry);
         }
+        public void CreatePdf(TourItem tourItem)
+        {
+            filesystemTourItemDAO.CreatePdf(tourItem, databaseTourItemDAO.GetLogs(tourItem.TourId));
+        }
 
     }
 }

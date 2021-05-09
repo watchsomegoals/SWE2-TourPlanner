@@ -37,3 +37,13 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\TourModifyWindow.baml
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogModifyWindow.g.cs
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogModifyWindow.baml
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Aspose.PDF.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Aspose.Words.Pdf2Word.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Aspose.Words.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\SkiaSharp.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSkiaSharp.dylib
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\libSkiaSharp.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\libSkiaSharp.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\libSkiaSharp.dll
