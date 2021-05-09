@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -22,6 +23,7 @@ namespace SWE2TourPlanner.ViewModels
         private ICommand addTourCommand;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        private readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
 
         public ICommand AddTourCommand => addTourCommand ??= new RelayCommand(AddTour);
 
@@ -38,6 +40,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((currentRoute != value) && (value != null))
                 {
                     currentRoute = value;
+                    CheckInputRoute();
                     RaisePropertyChangedEvent(nameof(CurrentRoute));
                 }
             }
@@ -52,6 +55,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((newTourText != value) && (value != null))
                 {
                     newTourText = value;
+                    CheckInputNewTourText();
                     RaisePropertyChangedEvent(nameof(NewTourText));
                 }
             }
@@ -65,6 +69,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((from != value) && (value != null))
                 {
                     from = value;
+                    CheckInputFrom();
                     RaisePropertyChangedEvent(nameof(From));
                 }
             }
@@ -78,6 +83,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((to != value) && (value != null))
                 {
                     to = value;
+                    CheckInputTo();
                     RaisePropertyChangedEvent(nameof(To));
                 }
             }
@@ -91,12 +97,13 @@ namespace SWE2TourPlanner.ViewModels
                 if ((description != value) && (value != null))
                 {
                     description = value;
+                    CheckInputDescription();
                     RaisePropertyChangedEvent(nameof(Description));
                 }
             }
         }
 
-        public bool HasErrors { get; set; } = false;
+        public bool HasErrors => _errorsByPropertyName.Any();
 
         public TourAddViewModel()
         {
@@ -129,63 +136,98 @@ namespace SWE2TourPlanner.ViewModels
             }
             else
             {
-                CheckInputs();
+                CheckInputNewTourText();
+                CheckInputFrom();
+                CheckInputTo();
+                CheckInputDescription();
+                CheckInputRoute();
             }
         }
 
         public IEnumerable GetErrors(string propertyName)
         {
-            if (string.IsNullOrEmpty(propertyName) || (!HasErrors))
-                return null;
-            return new List<string>() { "Please fill in this field." };
+            return _errorsByPropertyName.ContainsKey(propertyName) ?
+            _errorsByPropertyName[propertyName] : null;
         }
 
-        public void CheckInputs()
+        private void OnErrorsChanged(string propertyName)
         {
-            if(string.IsNullOrEmpty(NewTourText))
-            {
-                HasErrors = true;
-                if(HasErrors)
-                {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("NewTourText"));
-                    HasErrors = false;
-                }
-            }
-            if(string.IsNullOrEmpty(From))
-            {
-                HasErrors = true;
-                if(HasErrors)
-                {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("From"));
-                    HasErrors = false;
-                }  
-            }
-            if (string.IsNullOrEmpty(To))
-            {
-                HasErrors = true;
-                if (HasErrors)
-                {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("To"));
-                    HasErrors = false;
-                }
-            }
-            if (string.IsNullOrEmpty(Description))
-            {
-                HasErrors = true;
-                if (HasErrors)
-                {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("Description"));
-                    HasErrors = false;
-                }
-            }
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public bool CheckInputRoute()
+        {
+            ClearErrors(nameof(CurrentRoute));
             if (CurrentRoute == null)
             {
-                HasErrors = true;
-                if (HasErrors)
-                {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("CurrentRoute"));
-                    HasErrors = false;
-                }
+                AddError(nameof(CurrentRoute), "Route Type cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckInputNewTourText()
+        {
+            ClearErrors(nameof(NewTourText));
+            if (string.IsNullOrWhiteSpace(NewTourText))
+            {
+                AddError(nameof(NewTourText), "Name cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckInputFrom()
+        {
+            ClearErrors(nameof(From));
+            if (string.IsNullOrWhiteSpace(From))
+            {
+                AddError(nameof(From), "Starting Point cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckInputTo()
+        {
+            ClearErrors(nameof(To));
+            if (string.IsNullOrWhiteSpace(To))
+            {
+                AddError(nameof(To), "Destination cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckInputDescription()
+        {
+            ClearErrors(nameof(Description));
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                AddError(nameof(Description), "Description cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        private void AddError(string propertyName, string error)
+        {
+            if (!_errorsByPropertyName.ContainsKey(propertyName))
+                _errorsByPropertyName[propertyName] = new List<string>();
+
+            if (!_errorsByPropertyName[propertyName].Contains(error))
+            {
+                _errorsByPropertyName[propertyName].Add(error);
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        private void ClearErrors(string propertyName)
+        {
+            if (_errorsByPropertyName.ContainsKey(propertyName))
+            {
+                _errorsByPropertyName.Remove(propertyName);
+                OnErrorsChanged(propertyName);
             }
         }
     }

@@ -56,6 +56,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((dateTime != value) && (value != null))
                 {
                     dateTime = value;
+                    ValidateDateTime();
                     RaisePropertyChangedEvent(nameof(DateTime));
                 }
             }
@@ -69,6 +70,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((report != value) && (value != null))
                 {
                     report = value;
+                    ValidateReport();
                     RaisePropertyChangedEvent(nameof(Report));
                 }
             }
@@ -82,6 +84,7 @@ namespace SWE2TourPlanner.ViewModels
                 if ((distance != value) && (value != null))
                 {
                     distance = value;
+                    ValidateDistance();
                     RaisePropertyChangedEvent(nameof(Distance));
                 }
             }
@@ -194,7 +197,8 @@ namespace SWE2TourPlanner.ViewModels
 
         private void AddLog(object commandParameter)
         {
-            if(ValidateTotalTime())
+            if(ValidateDateTime() && ValidateReport() && ValidateDistance() && ValidateTotalTime() && ValidateRating() && 
+               ValidateAvgSpeed() && ValidateInclination() && ValidateTopSpeed() && ValidateMaxHeight() && ValidateMinHeight())
             {
                 this.tourItemFactory.AddLog(CurrentTour.TourId, DateTime, Report, Distance, TotalTime, Rating, AvgSpeed, Inclination, TopSpeed, MaxHeight, MinHeight);
                 var window = (Window)commandParameter;
@@ -202,7 +206,16 @@ namespace SWE2TourPlanner.ViewModels
             }
             else
             {
+                ValidateDateTime();
+                ValidateReport();
+                ValidateDistance();
                 ValidateTotalTime();
+                ValidateRating();
+                ValidateAvgSpeed();
+                ValidateInclination();
+                ValidateTopSpeed();
+                ValidateMaxHeight();
+                ValidateMinHeight();
             }
         }
 
@@ -215,6 +228,69 @@ namespace SWE2TourPlanner.ViewModels
         private void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private bool ValidateDateTime()
+        {
+            Regex regex = new Regex(@"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$");
+            ClearErrors(nameof(DateTime));
+
+            if (string.IsNullOrEmpty(DateTime))
+            {
+                AddError(nameof(DateTime), "Date Time cannot be empty.");
+                return false;
+            }
+            if (!regex.IsMatch(DateTime))
+            {
+                AddError(nameof(DateTime), "Date Time Format must be DD/MM/YYYY.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateReport()
+        {
+            ClearErrors(nameof(Report));
+
+            if (string.IsNullOrWhiteSpace(Report))
+            {
+                AddError(nameof(Report), "Report cannot be empty.");
+                return false;
+            }
+            if (Report.Length > 50)
+            {
+                AddError(nameof(Report), "Report has to be lower than 50 characters.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateDistance()
+        {
+            bool res;
+            float distance;
+            res = float.TryParse(Distance, out distance);
+            ClearErrors(nameof(Distance));
+
+            if (string.IsNullOrWhiteSpace(Distance))
+            {
+                AddError(nameof(Distance), "Distance cannot be empty.");
+                return false;
+            }
+            if (!res)
+            {
+                AddError(nameof(Distance), "Distance has to be a float.");
+                return false;
+            }
+            else
+            {
+                if ((distance < 1) || (distance > 10000))
+                {
+                    AddError(nameof(Distance), "Distance has to be between 1 and 10000 km.");
+                    return false;
+                }
+            }
+            return true;
         }
 
         private bool ValidateTotalTime()

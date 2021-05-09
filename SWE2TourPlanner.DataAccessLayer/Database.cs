@@ -398,5 +398,10 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void CreatePdf(TourItem tourItem, List<LogItem> logItems)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

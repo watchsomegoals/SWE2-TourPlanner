@@ -18,5 +18,6 @@ namespace SWE2TourPlanner.DataAccessLayer
         public void DeleteLog(int logid);
         public void ModifyTour(TourItem currentTour, string description, string route);
         public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry);
+        public void CreatePdf(TourItem tourItem, List<LogItem> logItems);
     }
 }
