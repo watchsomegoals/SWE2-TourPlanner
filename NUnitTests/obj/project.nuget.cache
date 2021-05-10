@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xilWoNM52ZfwuS86QlKTPP8JQDtzMVQ3a7yyDZrOahsyQo6ULrtJWOq9YrFEqKLi4sQpwiG48WAMMndjtgMWzg==",
+  "dgSpecHash": "PnAlR7miROH2eMtdZUQRtDZ/nZoYKV1GOPvynkTZsm4YJaR4cQ3CcFRqBPhbmlcUeT27NaHNAp34rdzIPqaoNg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\NUnitTests\\NUnitTests.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,9 @@
     "C:\\Users\\Lucian\\.nuget\\packages\\nunit3testadapter\\3.16.1\\nunit3testadapter.3.16.1.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\skiasharp\\2.80.1\\skiasharp.2.80.1.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.compression.base\\19.1.0.59\\syncfusion.compression.base.19.1.0.59.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.licensing\\19.1.0.59\\syncfusion.licensing.19.1.0.59.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.pdf.wpf\\19.1.0.59\\syncfusion.pdf.wpf.19.1.0.59.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.appcontext\\4.1.0\\system.appcontext.4.1.0.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",

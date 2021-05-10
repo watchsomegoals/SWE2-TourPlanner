@@ -190,6 +190,34 @@
           }
         }
       },
+      "Syncfusion.Compression.Base/19.1.0.59": {
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll": {
+            "assemblyVersion": "19.1310.0.59",
+            "fileVersion": "19.1310.0.59"
+          }
+        }
+      },
+      "Syncfusion.Licensing/19.1.0.59": {
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "19.1.0.59",
+            "fileVersion": "19.1.0.59"
+          }
+        }
+      },
+      "Syncfusion.Pdf.Wpf/19.1.0.59": {
+        "dependencies": {
+          "Syncfusion.Compression.Base": "19.1.0.59",
+          "Syncfusion.Licensing": "19.1.0.59"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Pdf.Base.dll": {
+            "assemblyVersion": "19.1310.0.59",
+            "fileVersion": "19.1310.0.59"
+          }
+        }
+      },
       "System.AppContext/4.1.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -790,6 +818,27 @@
       "sha512": "sha512-CiQwnDzG+1JNGzjAN9G/9n/lJgUVA/NPOFgSlEtu6c7qQ0O7P1tMjrXp/+PtWfX0xyyY9ABsFAZK2kW34U7r/A==",
       "path": "skiasharp/2.80.1",
       "hashPath": "skiasharp.2.80.1.nupkg.sha512"
+    },
+    "Syncfusion.Compression.Base/19.1.0.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gqEWCEDoOcd49Q9fcYQRD6oBWA5NPgpUzFEqF5JpKkaD135yKJl2OPqIlLy5hBTEeuKMxEivH4kTMYjxFT9zIQ==",
+      "path": "syncfusion.compression.base/19.1.0.59",
+      "hashPath": "syncfusion.compression.base.19.1.0.59.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/19.1.0.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NlRxX/UdQznQu6HC1CGTmGKL0XJyROzCMgGKkIeb80b2KLQ3tvN/ft9UEi0vbn55pDmgbmueEJUF8cYm6GR0CQ==",
+      "path": "syncfusion.licensing/19.1.0.59",
+      "hashPath": "syncfusion.licensing.19.1.0.59.nupkg.sha512"
+    },
+    "Syncfusion.Pdf.Wpf/19.1.0.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1C4bBLdgHBHQdSZa810NgpQsxhqz/HqWh/9Y4ttFsrlDSIzNmwOiBOpxmUsKn6ajojkqrzTh0QyhrwoIGBIZcA==",
+      "path": "syncfusion.pdf.wpf/19.1.0.59",
+      "hashPath": "syncfusion.pdf.wpf.19.1.0.59.nupkg.sha512"
     },
     "System.AppContext/4.1.0": {
       "type": "package",

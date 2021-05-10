@@ -129,6 +129,19 @@
                     </Border>
                 </Popup>
 
+                <Popup Placement="Center" IsOpen="{Binding IsPopUpCreatePdfVisible}" AllowsTransparency="True">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid Background="White">
+                            <StackPanel Grid.Column="1" Margin="8,5,8,5">
+                                <TextBlock Text="An error has occured." FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Select a tour to generate a pdf." Margin="5 30 5 5" HorizontalAlignment="Center"/>
+                                <Button Content="Close" Margin="19,5,19,5"
+                                    Command="{Binding CloseCreatePdfPopUpCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Popup>
+
                 <!-- TOURS -->
                 <Grid Grid.Row="2" Grid.Column="0">
                     <Grid.ColumnDefinitions>

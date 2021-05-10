@@ -47,3 +47,6 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\libSkiaSharp.dll
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\libSkiaSharp.dll
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\libSkiaSharp.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Syncfusion.Compression.Base.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Syncfusion.Licensing.dll
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreapp3.1\Syncfusion.Pdf.Base.dll

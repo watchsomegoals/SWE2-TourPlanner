@@ -1,11 +1,15 @@
 ﻿using Aspose.Pdf;
+using Aspose.Pdf.Facades;
 using Aspose.Pdf.Text;
 using Newtonsoft.Json;
 using SWE2TourPlanner.Models;
+using Syncfusion.Pdf.Parsing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Windows.Controls;
 
 namespace SWE2TourPlanner.DataAccessLayer
 {
@@ -30,12 +34,11 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void CreatePdf(TourItem tourItem, List<LogItem> logItems)
         {
-            string path = "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\Documents";
             // Initialize document object
             Document document = new Document();
-            
+
             // Add page
-            Page page = document.Pages.Add();
+            Aspose.Pdf.Page page = document.Pages.Add();
 
             // Add Header
             var header = new TextFragment("Tour: " + tourItem.Name + " from " + tourItem.From + " to " + tourItem.To + "\nRoute Type: " + tourItem.Route);
@@ -79,20 +82,20 @@ namespace SWE2TourPlanner.DataAccessLayer
             };
 
             var headerRow1 = table1.Rows.Add();
-            headerRow1.Cells.Add("Id");
+            headerRow1.Cells.Add("Log id");
             headerRow1.Cells.Add("Date");
             headerRow1.Cells.Add("Report");
-            headerRow1.Cells.Add("Distance");
+            headerRow1.Cells.Add("Distance (km)");
             headerRow1.Cells.Add("Time");
             headerRow1.Cells.Add("Rating");
 
             var headerRow2 = table2.Rows.Add();
-            headerRow2.Cells.Add("Id");
-            headerRow2.Cells.Add("Avg Speed");
-            headerRow2.Cells.Add("Inclination");
-            headerRow2.Cells.Add("Top Speed");
-            headerRow2.Cells.Add("Max Height");
-            headerRow2.Cells.Add("Min Height");
+            headerRow2.Cells.Add("Log id");
+            headerRow2.Cells.Add("Avg Speed (km/h)");
+            headerRow2.Cells.Add("Inclination (degrees)");
+            headerRow2.Cells.Add("Top Speed (km/h)");
+            headerRow2.Cells.Add("Max Height (m)");
+            headerRow2.Cells.Add("Min Height (m)");
 
             foreach (Cell headerRowCell in headerRow1.Cells)
             {
@@ -127,8 +130,11 @@ namespace SWE2TourPlanner.DataAccessLayer
             page.Paragraphs.Add(table1);
             page.Paragraphs.Add(table2);
 
-            document.Save(System.IO.Path.Combine(path, tourItem.TourId.ToString() + ".pdf"));
+            document.Save(configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf");
+            string fileName = configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf";
 
+            PdfViewer viewer = new PdfViewer(document);
+            viewer.PrintDocument();
         }
 
         public string CreateImage(string from, string to, string path = "No path")
@@ -238,6 +244,16 @@ namespace SWE2TourPlanner.DataAccessLayer
         }
 
         public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesTourExist(int tourid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesLogExist(int logid)
         {
             throw new NotImplementedException();
         }

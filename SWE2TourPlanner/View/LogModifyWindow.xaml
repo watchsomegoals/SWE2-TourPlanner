@@ -5,7 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LogModifyViewModel}"
         mc:Ignorable="d"
-        Title="LogModifyWindow" Height="300" Width="400">
+        Title="LogModifyWindow" Height="320" Width="400">
+    <Window.Resources>
+        <Style x:Key="DefaultTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="0,5,0,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="DefaultComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,5,0,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                            <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CustomErrorControlOnErrorStyleComboBox" TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                            <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)/ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -21,8 +58,9 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox ItemsSource="{Binding Path=LogDataTypesItems}"
-                          SelectedItem="{Binding Path=CurrentLogDataType}"
-                          DisplayMemberPath="Display"/>
+                          SelectedItem="{Binding Path=CurrentLogDataType, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                          DisplayMemberPath="Display"
+                          Style="{StaticResource CustomErrorControlOnErrorStyleComboBox}"/>
             </Grid>
 
             <Label Content="Enter New Log Data:"/>
@@ -32,7 +70,8 @@
                      AcceptsReturn="True"
                      HorizontalScrollBarVisibility="Disabled"
                      VerticalScrollBarVisibility="Auto" 
-                     Text="{Binding NewEntry, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding NewEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                     Style="{StaticResource CustomErrorControlOnErrorStyle}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>

@@ -139,6 +139,10 @@
               "target": "Package",
               "version": "[5.0.4, )"
             },
+            "Syncfusion.Pdf.Wpf": {
+              "target": "Package",
+              "version": "[19.1.0.59, )"
+            },
             "log4net": {
               "target": "Package",
               "version": "[2.0.12, )"
