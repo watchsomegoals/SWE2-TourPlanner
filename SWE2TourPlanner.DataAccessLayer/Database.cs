@@ -101,6 +101,52 @@ namespace SWE2TourPlanner.DataAccessLayer
             }
         }
 
+        public bool DoesTourExist(int tourid)
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strcount = "Select count(*) from tours where tourid = @tourid";
+
+            NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
+            sqlcount.Parameters.AddWithValue("tourid", tourid);
+
+            Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
+
+            if(count == 0)
+            {
+                conn.Close();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool DoesLogExist(int logid)
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strcount = "Select count(*) from logs where logid = @logid";
+
+            NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
+            sqlcount.Parameters.AddWithValue("logid", logid);
+
+            Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
+
+            if (count == 0)
+            {
+                conn.Close();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
             int logId = GetLogItemIdForInsert();

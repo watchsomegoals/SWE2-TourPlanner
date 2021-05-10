@@ -28,8 +28,11 @@ namespace SWE2TourPlanner.BusinessLayer
 
         public void DeleteItemAndSavePath(int tourid, string path)
         {
-            filesystemTourItemDAO.SaveImagePath(path);
-            databaseTourItemDAO.DeleteItem(tourid);
+            if(databaseTourItemDAO.DoesTourExist(tourid))
+            {
+                filesystemTourItemDAO.SaveImagePath(path);
+                databaseTourItemDAO.DeleteItem(tourid);
+            }
         }
 
         public void DeleteImages()
@@ -65,7 +68,10 @@ namespace SWE2TourPlanner.BusinessLayer
 
         public void DeleteLog(int logid)
         {
-            databaseTourItemDAO.DeleteLog(logid);
+            if(databaseTourItemDAO.DoesLogExist(logid))
+            {
+                databaseTourItemDAO.DeleteLog(logid);
+            }
         }
 
         public void ModifyTour(TourItem currentTour, string description, string route)

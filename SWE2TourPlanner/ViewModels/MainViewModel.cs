@@ -25,6 +25,7 @@ namespace SWE2TourPlanner.ViewModels
         private bool isPopUpDeleteLogVisible;
         private bool isPopUpModifyLogVisible;
         private bool isPopUpAddLogVisible;
+        private bool isPopUpCreatePdfVisible;
 
         private ICommand popUpAddCommand;
         private ICommand deleteTourCommand;
@@ -45,6 +46,8 @@ namespace SWE2TourPlanner.ViewModels
         private ICommand openAddLogPopUpCommand;
         private ICommand closeAddLogPopUpCommand;
         private ICommand createPdfCommand;
+        private ICommand openCreatePdfPopUpCommand;
+        private ICommand closeCreatePdfPopUpCommand;
 
 
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
@@ -66,6 +69,8 @@ namespace SWE2TourPlanner.ViewModels
         public ICommand OpenAddLogPopUpCommand => openAddLogPopUpCommand ??= new RelayCommand(OpenAddLogPopUp);
         public ICommand CloseAddLogPopUpCommand => closeAddLogPopUpCommand ??= new RelayCommand(CloseAddLogPopUp);
         public ICommand CreatePdfCommand => createPdfCommand ??= new RelayCommand(CreatePdf);
+        public ICommand OpenCreatePdfPopUpCommand => openCreatePdfPopUpCommand ??= new RelayCommand(OpenCreatePdfPopUp);
+        public ICommand CloseCreatePdfPopUpCommand => closeCreatePdfPopUpCommand ??= new RelayCommand(CloseCreatePdfPopUp);
 
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
@@ -105,6 +110,19 @@ namespace SWE2TourPlanner.ViewModels
                     RaisePropertyChangedEvent(nameof(CurrentItem));
                     LogItems.Clear();
                     FillDataGrid(CurrentItem.TourId);
+                }
+            }
+        }
+
+        public bool IsPopUpCreatePdfVisible
+        {
+            get { return isPopUpCreatePdfVisible; }
+            set
+            {
+                if (isPopUpCreatePdfVisible != value)
+                {
+                    isPopUpCreatePdfVisible = value;
+                    RaisePropertyChangedEvent(nameof(IsPopUpCreatePdfVisible));
                 }
             }
         }
@@ -211,7 +229,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void PopUpAdd(object commandParameter)
         {
-            if(!IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyTourVisible)
+            if(!IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 //this.tourAddViewModel = new TourAddViewModel();
                 TourAddWindow view = new TourAddWindow();
@@ -225,7 +243,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void PopUpAddLog(object commandParameter)
         {
-            if(CurrentItem != null && !IsPopUpAddLogVisible && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyTourVisible)
+            if(CurrentItem != null && !IsPopUpAddLogVisible && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpCreatePdfVisible)
             {
                 this.logAddViewModel = new LogAddViewModel();
                 logAddViewModel.CurrentTour = CurrentItem;
@@ -237,7 +255,7 @@ namespace SWE2TourPlanner.ViewModels
                 LogItems.Clear();
                 FillDataGrid(CurrentItem.TourId);
             }
-            else if(CurrentItem == null && !IsPopUpAddLogVisible && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            else if(CurrentItem == null && !IsPopUpAddLogVisible && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenAddLogPopUp(commandParameter);
             }
@@ -245,7 +263,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void DeleteTour(object commandParameter)
         {
-            if(CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            if(CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 string path = CurrentItem.ImagePath;
                 this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.TourId, path);
@@ -253,7 +271,7 @@ namespace SWE2TourPlanner.ViewModels
                 FillListBox();
                 LogItems.Clear();
             }
-            else if(CurrentItem == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            else if(CurrentItem == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenDeleteTourPopUp(commandParameter);
             }
@@ -261,13 +279,13 @@ namespace SWE2TourPlanner.ViewModels
         
         private void DeleteLog(object commandParameter)
         {
-            if (CurrentLog != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            if (CurrentLog != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 this.tourItemFactory.DeleteLog(CurrentLog.LogId);
                 LogItems.Clear();
                 FillDataGrid(CurrentItem.TourId);
             }
-            else if (CurrentLog == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            else if (CurrentLog == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenDeleteLogPopUp(commandParameter);
             }
@@ -275,7 +293,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void PopUpModify(object commandParameter)
         {
-            if (CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            if (CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 this.tourModifyViewModel = new TourModifyViewModel();
                 tourModifyViewModel.CurrentTour = CurrentItem;
@@ -287,7 +305,7 @@ namespace SWE2TourPlanner.ViewModels
                 TourItems.Clear();
                 FillListBox();
             }
-            else if (CurrentItem == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            else if (CurrentItem == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenModifyTourPopUp(commandParameter);
             }
@@ -295,7 +313,7 @@ namespace SWE2TourPlanner.ViewModels
 
         private void PopUpModifyLog(object commandParameter)
         {
-            if (CurrentLog != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            if (CurrentLog != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 this.logModifyViewModel = new LogModifyViewModel();
                 logModifyViewModel.CurrentLog = CurrentLog;
@@ -307,7 +325,7 @@ namespace SWE2TourPlanner.ViewModels
                 LogItems.Clear();
                 FillDataGrid(CurrentItem.TourId);
             }
-            else if (CurrentLog == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible)
+            else if (CurrentLog == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenModifyLogPopUp(commandParameter);
             }
@@ -328,24 +346,37 @@ namespace SWE2TourPlanner.ViewModels
 
         private void Search(object commandParameter)
         {
-            IEnumerable foundItems = this.tourItemFactory.Search(SearchText);
-            TourItems.Clear();
-            foreach (TourItem item in foundItems)
+            if(!string.IsNullOrEmpty(SearchText) && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
-                TourItems.Add(item);
+                IEnumerable foundItems = this.tourItemFactory.Search(SearchText);
+                TourItems.Clear();
+                foreach (TourItem item in foundItems)
+                {
+                    TourItems.Add(item);
+                }
             }
         }
 
         private void Clear(object commandParameter)
         {
-            TourItems.Clear();
-            SearchText = "";
-            FillListBox();
+            if(!IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
+            {
+                TourItems.Clear();
+                SearchText = "";
+                FillListBox();
+            }
         }
 
         private void CreatePdf(object commandParameter)
         {
-            tourItemFactory.CreatePdf(CurrentItem);
+            if(CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
+            {
+                tourItemFactory.CreatePdf(CurrentItem);
+            }
+            else if(CurrentItem == null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
+            {
+                OpenCreatePdfPopUp(commandParameter);
+            }
         }
 
         private void OpenDeleteTourPopUp(object commandParameter)
@@ -396,6 +427,16 @@ namespace SWE2TourPlanner.ViewModels
         private void CloseAddLogPopUp(object commandParameter)
         {
             IsPopUpAddLogVisible = false;
+        }
+
+        private void OpenCreatePdfPopUp(object commandParameter)
+        {
+            IsPopUpCreatePdfVisible = true;
+        }
+
+        private void CloseCreatePdfPopUp(object commandParameter)
+        {
+            IsPopUpCreatePdfVisible = false;
         }
     }
 }

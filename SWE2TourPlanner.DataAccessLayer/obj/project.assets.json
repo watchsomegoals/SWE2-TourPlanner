@@ -207,6 +207,37 @@
           }
         }
       },
+      "Syncfusion.Compression.Base/19.1.0.59": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll": {}
+        }
+      },
+      "Syncfusion.Licensing/19.1.0.59": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.Pdf.Wpf/19.1.0.59": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Compression.Base": "19.1.0.59",
+          "Syncfusion.Licensing": "19.1.0.59"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Pdf.Base.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Pdf.Base.dll": {}
+        }
+      },
       "System.AppContext/4.1.0": {
         "type": "package",
         "dependencies": {
@@ -1161,6 +1192,87 @@
         "skiasharp.2.80.1.nupkg.sha512",
         "skiasharp.nuspec",
         "xamarin.interactive/SkiaSharp.Workbooks.dll"
+      ]
+    },
+    "Syncfusion.Compression.Base/19.1.0.59": {
+      "sha512": "gqEWCEDoOcd49Q9fcYQRD6oBWA5NPgpUzFEqF5JpKkaD135yKJl2OPqIlLy5hBTEeuKMxEivH4kTMYjxFT9zIQ==",
+      "type": "package",
+      "path": "syncfusion.compression.base/19.1.0.59",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/Syncfusion.Compression.Base.dll",
+        "lib/net20/Syncfusion.Compression.Base.xml",
+        "lib/net35/Syncfusion.Compression.Base.dll",
+        "lib/net35/Syncfusion.Compression.Base.xml",
+        "lib/net40/Syncfusion.Compression.Base.dll",
+        "lib/net40/Syncfusion.Compression.Base.xml",
+        "lib/net45/Syncfusion.Compression.Base.dll",
+        "lib/net45/Syncfusion.Compression.Base.xml",
+        "lib/net451/Syncfusion.Compression.Base.dll",
+        "lib/net451/Syncfusion.Compression.Base.xml",
+        "lib/net46/Syncfusion.Compression.Base.dll",
+        "lib/net46/Syncfusion.Compression.Base.xml",
+        "lib/net5.0/Syncfusion.Compression.Base.dll",
+        "lib/net5.0/Syncfusion.Compression.Base.xml",
+        "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll",
+        "lib/netcoreapp3.1/Syncfusion.Compression.Base.xml",
+        "syncfusion.compression.base.19.1.0.59.nupkg.sha512",
+        "syncfusion.compression.base.nuspec"
+      ]
+    },
+    "Syncfusion.Licensing/19.1.0.59": {
+      "sha512": "NlRxX/UdQznQu6HC1CGTmGKL0XJyROzCMgGKkIeb80b2KLQ3tvN/ft9UEi0vbn55pDmgbmueEJUF8cYm6GR0CQ==",
+      "type": "package",
+      "path": "syncfusion.licensing/19.1.0.59",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/MonoAndroid10.0/Syncfusion.Licensing.dll",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net20/Syncfusion.Licensing.dll",
+        "lib/net35/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net451/Syncfusion.Licensing.dll",
+        "lib/net46/Syncfusion.Licensing.dll",
+        "lib/net5.0/Syncfusion.Licensing.dll",
+        "lib/netcoreapp3.1/Syncfusion.Licensing.dll",
+        "lib/netstandard1.0/Syncfusion.Licensing.dll",
+        "lib/netstandard1.2/Syncfusion.Licensing.dll",
+        "lib/netstandard1.4/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.19.1.0.59.nupkg.sha512",
+        "syncfusion.licensing.nuspec"
+      ]
+    },
+    "Syncfusion.Pdf.Wpf/19.1.0.59": {
+      "sha512": "1C4bBLdgHBHQdSZa810NgpQsxhqz/HqWh/9Y4ttFsrlDSIzNmwOiBOpxmUsKn6ajojkqrzTh0QyhrwoIGBIZcA==",
+      "type": "package",
+      "path": "syncfusion.pdf.wpf/19.1.0.59",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Syncfusion.Pdf.Base.dll",
+        "lib/net35/Syncfusion.Pdf.Base.xml",
+        "lib/net40/Syncfusion.Pdf.Base.dll",
+        "lib/net40/Syncfusion.Pdf.Base.xml",
+        "lib/net45/Syncfusion.Pdf.Base.dll",
+        "lib/net45/Syncfusion.Pdf.Base.xml",
+        "lib/net451/Syncfusion.Pdf.Base.dll",
+        "lib/net451/Syncfusion.Pdf.Base.xml",
+        "lib/net46/Syncfusion.Pdf.Base.dll",
+        "lib/net46/Syncfusion.Pdf.Base.xml",
+        "lib/net5.0-windows/Syncfusion.Pdf.Base.dll",
+        "lib/net5.0-windows/Syncfusion.Pdf.Base.xml",
+        "lib/netcoreapp3.1/Syncfusion.Pdf.Base.dll",
+        "lib/netcoreapp3.1/Syncfusion.Pdf.Base.xml",
+        "syncfusion.pdf.wpf.19.1.0.59.nupkg.sha512",
+        "syncfusion.pdf.wpf.nuspec"
       ]
     },
     "System.AppContext/4.1.0": {
@@ -3331,6 +3443,7 @@
       "Newtonsoft.Json >= 13.0.1",
       "Npgsql >= 5.0.4",
       "SWE2TourPlanner.Models >= 1.0.0",
+      "Syncfusion.Pdf.Wpf >= 19.1.0.59",
       "log4net >= 2.0.12"
     ]
   },
@@ -3392,6 +3505,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[5.0.4, )"
+          },
+          "Syncfusion.Pdf.Wpf": {
+            "target": "Package",
+            "version": "[19.1.0.59, )"
           },
           "log4net": {
             "target": "Package",

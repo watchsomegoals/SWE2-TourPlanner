@@ -86,6 +86,14 @@ namespace SWE2TourPlanner.DataAccessLayer
             dataAccess.CreatePdf(tourItem, logItems);
         }
 
+        public bool DoesTourExist(int tourid)
+        {
+            return dataAccess.DoesTourExist(tourid);
+        }
 
+        public bool DoesLogExist(int logid)
+        {
+            return dataAccess.DoesLogExist(logid);
+        }
     }
 }

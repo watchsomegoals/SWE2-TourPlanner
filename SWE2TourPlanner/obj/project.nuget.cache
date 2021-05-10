@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EIB6oQo0zXTBAXdG/AG/P/B0vywg23uo07C+81iPkTotYA8ai5MyBTT1w3x7rgockjFe8nE614kYMdWRMe8HFQ==",
+  "dgSpecHash": "YKd3NL2nIvjEH28m1nODkiimdYADf5Tkt0B+zsrRSJJM75NQbxSt4BnwaRnXdFzzeZBZxY3AX1tT4sFBMisabQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucian\\Desktop\\swe2\\SWE2TourPlanner\\SWE2TourPlanner\\SWE2TourPlanner.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,9 @@
     "C:\\Users\\Lucian\\.nuget\\packages\\npgsql\\5.0.4\\npgsql.5.0.4.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\skiasharp\\2.80.1\\skiasharp.2.80.1.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.compression.base\\19.1.0.59\\syncfusion.compression.base.19.1.0.59.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.licensing\\19.1.0.59\\syncfusion.licensing.19.1.0.59.nupkg.sha512",
+    "C:\\Users\\Lucian\\.nuget\\packages\\syncfusion.pdf.wpf\\19.1.0.59\\syncfusion.pdf.wpf.19.1.0.59.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.appcontext\\4.1.0\\system.appcontext.4.1.0.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.collections\\4.0.11\\system.collections.4.0.11.nupkg.sha512",
     "C:\\Users\\Lucian\\.nuget\\packages\\system.configuration.configurationmanager\\4.5.0\\system.configuration.configurationmanager.4.5.0.nupkg.sha512",
