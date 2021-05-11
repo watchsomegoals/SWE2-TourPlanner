@@ -18,5 +18,7 @@ namespace SWE2TourPlanner.BusinessLayer
         public void ModifyTour(TourItem currentTour, string description, string route);
         public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry);
         public void CreatePdf(TourItem tourItem);
+        public void Export();
+        public void Import(string filePath);
     }
 }

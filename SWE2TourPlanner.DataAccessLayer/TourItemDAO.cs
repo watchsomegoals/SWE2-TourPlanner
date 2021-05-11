@@ -95,5 +95,10 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             return dataAccess.DoesLogExist(logid);
         }
+
+        public void Export(List<ExportObject> exportObjects)
+        {
+            dataAccess.Export(exportObjects);
+        }
     }
 }

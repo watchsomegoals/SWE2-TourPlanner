@@ -88,5 +88,72 @@ namespace SWE2TourPlanner.BusinessLayer
             filesystemTourItemDAO.CreatePdf(tourItem, databaseTourItemDAO.GetLogs(tourItem.TourId));
         }
 
+        public void Export()
+        {
+            List<ExportObject> exportObjects = new List<ExportObject>();
+            List<LogItem> logItems = new List<LogItem>();
+            List<TourItem> tourItems = new List<TourItem>();
+            tourItems = databaseTourItemDAO.GetItems();
+
+            foreach (TourItem tour in tourItems)
+            {
+                ExportObject exportObject = new ExportObject() { Item = tour };
+                exportObject.LogItems = new List<LogItem>();
+                if(databaseTourItemDAO.GetLogs(exportObject.Item.TourId).Count != 0)
+                {
+                    foreach (LogItem log in databaseTourItemDAO.GetLogs(exportObject.Item.TourId))
+                    {
+                        if (log != null)
+                        {
+                            exportObject.LogItems.Add(log);
+                        }
+                    }
+                }
+                
+                exportObjects.Add(exportObject);
+            }
+
+            filesystemTourItemDAO.Export(exportObjects);
+        }
+
+        public void DeleteAllToursAndLogs()
+        {
+            IEnumerable<TourItem> items = GetItems();
+            if(items != null)
+            {
+                foreach (TourItem tourItem in items.ToList())
+                {
+                    IEnumerable<LogItem> logItems = GetLogs(tourItem.TourId);
+                    foreach(LogItem logItem in logItems.ToList())
+                    {
+                        DeleteLog(logItem.LogId);
+                    }
+                    DeleteItemAndSavePath(tourItem.TourId, tourItem.ImagePath);
+                }
+            }
+        }
+
+        public void Import(string filePath)
+        {
+            DeleteAllToursAndLogs();
+
+            string json = File.ReadAllText(filePath);
+            List<ExportObject> exportObjects = JsonConvert.DeserializeObject<List<ExportObject>>(json);
+
+            foreach(ExportObject exportObject in exportObjects)
+            {
+                AddItem(exportObject.Item.Name, exportObject.Item.From, exportObject.Item.To, exportObject.Item.Description, exportObject.Item.Route);
+                if(exportObject.LogItems != null)
+                {
+                    foreach (LogItem logItem in exportObject.LogItems)
+                    {
+                        AddLog(exportObject.Item.TourId, logItem.DateTime, logItem.Report, logItem.Distance, logItem.TotalTime, 
+                            logItem.Rating, logItem.AvgSpeed, logItem.Inclination, logItem.TopSpeed, logItem.MaxHeight, logItem.MinHeight);
+                    }
+                }
+                
+            }
+             
+        }
     }
 }

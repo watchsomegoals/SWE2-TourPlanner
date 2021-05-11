@@ -144,7 +144,7 @@ namespace SWE2TourPlanner.DataAccessLayer
             string imageFilePath;
             string url = @"https://www.mapquestapi.com/staticmap/v5/map?start=" + from + "&end=" + to + "&size=600,400@2x&key=" + key;
 
-            if(path == "No path")
+            if (path == "No path")
             {
                 path = picturesfolderPath;
             }
@@ -178,7 +178,7 @@ namespace SWE2TourPlanner.DataAccessLayer
 
             string json = File.ReadAllText(path);
             List<ImagesToBeDeleted> images = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(json);
-            if(images != null)
+            if (images != null)
             {
                 foreach (ImagesToBeDeleted image in images)
                 {
@@ -198,7 +198,7 @@ namespace SWE2TourPlanner.DataAccessLayer
             string initialJson = File.ReadAllText(deletePath);
             var list = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(initialJson);
             ImagesToBeDeleted image = new ImagesToBeDeleted() { PathToDelete = path };
-            if(list == null)
+            if (list == null)
             {
                 list = new List<ImagesToBeDeleted>();
             }
@@ -257,5 +257,22 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void Export(List<ExportObject> exportObjects)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            string fileName = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+            using (StreamWriter sw = new StreamWriter(configFile.FsSettings.JsonExports + fileName + ".json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+
+                serializer.Serialize(writer, exportObjects);
+
+            }
+        }
     }
 }
+    
+

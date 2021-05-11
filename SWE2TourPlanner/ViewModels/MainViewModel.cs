@@ -48,7 +48,8 @@ namespace SWE2TourPlanner.ViewModels
         private ICommand createPdfCommand;
         private ICommand openCreatePdfPopUpCommand;
         private ICommand closeCreatePdfPopUpCommand;
-
+        private ICommand exportCommand;
+        private ICommand importCommand;
 
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
         public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
@@ -71,6 +72,8 @@ namespace SWE2TourPlanner.ViewModels
         public ICommand CreatePdfCommand => createPdfCommand ??= new RelayCommand(CreatePdf);
         public ICommand OpenCreatePdfPopUpCommand => openCreatePdfPopUpCommand ??= new RelayCommand(OpenCreatePdfPopUp);
         public ICommand CloseCreatePdfPopUpCommand => closeCreatePdfPopUpCommand ??= new RelayCommand(CloseCreatePdfPopUp);
+        public ICommand ExportCommand => exportCommand ??= new RelayCommand(Export);
+        public ICommand ImportCommand => importCommand ??= new RelayCommand(Import);
 
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
@@ -377,6 +380,27 @@ namespace SWE2TourPlanner.ViewModels
             {
                 OpenCreatePdfPopUp(commandParameter);
             }
+        }
+
+        private void Export(object commandParameter)
+        {
+            tourItemFactory.Export();
+        }
+
+        private void Import(object commandParameter)
+        {
+            string filePath;
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+
+            Nullable<bool> result = openFileDlg.ShowDialog();
+
+            if (result == true)
+            {
+                filePath = openFileDlg.FileName;
+                tourItemFactory.Import(filePath);
+            }
+            TourItems.Clear();
+            FillListBox();
         }
 
         private void OpenDeleteTourPopUp(object commandParameter)
