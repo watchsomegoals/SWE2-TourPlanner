@@ -449,5 +449,10 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void Export(List<ExportObject> exportObjects)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

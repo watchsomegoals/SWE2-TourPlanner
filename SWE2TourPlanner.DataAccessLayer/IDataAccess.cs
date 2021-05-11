@@ -21,5 +21,6 @@ namespace SWE2TourPlanner.DataAccessLayer
         public void CreatePdf(TourItem tourItem, List<LogItem> logItems);
         public bool DoesTourExist(int tourid);
         public bool DoesLogExist(int logid);
+        public void Export(List<ExportObject> exportObjects);
     }
 }
