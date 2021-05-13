@@ -15,6 +15,8 @@ namespace SWE2TourPlanner.ViewModels
 {
     public class LogModifyViewModel : ViewModelBase, INotifyDataErrorInfo
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string newEntry;
         private LogItem currentLog;
         private LogDataTypes currentLogDataType;
@@ -101,6 +103,9 @@ namespace SWE2TourPlanner.ViewModels
         {
             if(ValidateLogDataType() && ValidateNewEntry())
             {
+                string logs = "Log with id: " + CurrentLog.LogId + " modified.";
+                log.Info(logs);
+
                 this.tourItemFactory.ModifyLog(CurrentLog, CurrentLogDataType.TypeLogData, NewEntry);
                 var window = (Window)commandParameter;
                 window.Close();

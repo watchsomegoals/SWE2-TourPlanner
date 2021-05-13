@@ -15,6 +15,8 @@ namespace SWE2TourPlanner.DataAccessLayer
 {
     public class FileSystem : IDataAccess
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string picturesfolderPath;
         private string toDeleteFilePath;
         private ConfigFile configFile;
@@ -34,178 +36,211 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void CreatePdf(TourItem tourItem, List<LogItem> logItems)
         {
-            // Initialize document object
-            Document document = new Document();
-
-            // Add page
-            Aspose.Pdf.Page page = document.Pages.Add();
-
-            // Add Header
-            var header = new TextFragment("Tour: " + tourItem.Name + " from " + tourItem.From + " to " + tourItem.To + "\nRoute Type: " + tourItem.Route);
-            header.TextState.Font = FontRepository.FindFont("Arial");
-            header.TextState.FontSize = 20;
-            header.HorizontalAlignment = HorizontalAlignment.Center;
-            header.Position = new Position(130, 720);
-            page.Paragraphs.Add(header);
-
-            // Add table
-            var table1 = new Table
+            try
             {
-                ColumnWidths = "70",
-                Border = new BorderInfo(BorderSide.Box, 1f, Color.DarkSlateGray),
-                DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, Color.Black),
-                DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
-                Margin =
+                // Initialize document object
+                Document document = new Document();
+
+                // Add page
+                Aspose.Pdf.Page page = document.Pages.Add();
+
+                // Add Header
+                var header = new TextFragment("Tour: " + tourItem.Name + " from " + tourItem.From + " to " + tourItem.To + "\nRoute Type: " + tourItem.Route);
+                header.TextState.Font = FontRepository.FindFont("Arial");
+                header.TextState.FontSize = 20;
+                header.HorizontalAlignment = HorizontalAlignment.Center;
+                header.Position = new Position(130, 720);
+                page.Paragraphs.Add(header);
+
+                // Add table
+                var table1 = new Table
+                {
+                    ColumnWidths = "70",
+                    Border = new BorderInfo(BorderSide.Box, 1f, Color.DarkSlateGray),
+                    DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, Color.Black),
+                    DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
+                    Margin =
                 {
                     Bottom = 10
                 },
-                DefaultCellTextState =
+                    DefaultCellTextState =
                 {
                     Font =  FontRepository.FindFont("Helvetica")
                 }
-            };
+                };
 
-            var table2 = new Table
-            {
-                ColumnWidths = "70",
-                Border = new BorderInfo(BorderSide.Box, 1f, Color.DarkSlateGray),
-                DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, Color.Black),
-                DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
-                Margin =
+                var table2 = new Table
+                {
+                    ColumnWidths = "70",
+                    Border = new BorderInfo(BorderSide.Box, 1f, Color.DarkSlateGray),
+                    DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.5f, Color.Black),
+                    DefaultCellPadding = new MarginInfo(4.5, 4.5, 4.5, 4.5),
+                    Margin =
                 {
                     Bottom = 10
                 },
-                DefaultCellTextState =
+                    DefaultCellTextState =
                 {
                     Font =  FontRepository.FindFont("Helvetica")
                 }
-            };
+                };
 
-            var headerRow1 = table1.Rows.Add();
-            headerRow1.Cells.Add("Log id");
-            headerRow1.Cells.Add("Date");
-            headerRow1.Cells.Add("Report");
-            headerRow1.Cells.Add("Distance (km)");
-            headerRow1.Cells.Add("Time");
-            headerRow1.Cells.Add("Rating");
+                var headerRow1 = table1.Rows.Add();
+                headerRow1.Cells.Add("Log id");
+                headerRow1.Cells.Add("Date");
+                headerRow1.Cells.Add("Report");
+                headerRow1.Cells.Add("Distance (km)");
+                headerRow1.Cells.Add("Time");
+                headerRow1.Cells.Add("Rating");
 
-            var headerRow2 = table2.Rows.Add();
-            headerRow2.Cells.Add("Log id");
-            headerRow2.Cells.Add("Avg Speed (km/h)");
-            headerRow2.Cells.Add("Inclination (degrees)");
-            headerRow2.Cells.Add("Top Speed (km/h)");
-            headerRow2.Cells.Add("Max Height (m)");
-            headerRow2.Cells.Add("Min Height (m)");
+                var headerRow2 = table2.Rows.Add();
+                headerRow2.Cells.Add("Log id");
+                headerRow2.Cells.Add("Avg Speed (km/h)");
+                headerRow2.Cells.Add("Inclination (degrees)");
+                headerRow2.Cells.Add("Top Speed (km/h)");
+                headerRow2.Cells.Add("Max Height (m)");
+                headerRow2.Cells.Add("Min Height (m)");
 
-            foreach (Cell headerRowCell in headerRow1.Cells)
-            {
-                headerRowCell.BackgroundColor = Color.Gray;
-                headerRowCell.DefaultCellTextState.ForegroundColor = Color.WhiteSmoke;
+                foreach (Cell headerRowCell in headerRow1.Cells)
+                {
+                    headerRowCell.BackgroundColor = Color.Gray;
+                    headerRowCell.DefaultCellTextState.ForegroundColor = Color.WhiteSmoke;
+                }
+                foreach (Cell headerRowCell in headerRow2.Cells)
+                {
+                    headerRowCell.BackgroundColor = Color.Gray;
+                    headerRowCell.DefaultCellTextState.ForegroundColor = Color.WhiteSmoke;
+                }
+
+                foreach (LogItem logItem in logItems)
+                {
+                    var dataRow1 = table1.Rows.Add();
+                    dataRow1.Cells.Add(logItem.LogId.ToString());
+                    dataRow1.Cells.Add(logItem.DateTime);
+                    dataRow1.Cells.Add(logItem.Report);
+                    dataRow1.Cells.Add(logItem.Distance);
+                    dataRow1.Cells.Add(logItem.TotalTime);
+                    dataRow1.Cells.Add(logItem.Rating);
+
+                    var dataRow2 = table2.Rows.Add();
+                    dataRow2.Cells.Add(logItem.LogId.ToString());
+                    dataRow2.Cells.Add(logItem.AvgSpeed);
+                    dataRow2.Cells.Add(logItem.Inclination);
+                    dataRow2.Cells.Add(logItem.TopSpeed);
+                    dataRow2.Cells.Add(logItem.MaxHeight);
+                    dataRow2.Cells.Add(logItem.MinHeight);
+                }
+
+                page.Paragraphs.Add(table1);
+                page.Paragraphs.Add(table2);
+
+                document.Save(configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf");
+                string fileName = configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf";
+
+                PdfViewer viewer = new PdfViewer(document);
+                viewer.PrintDocument();
             }
-            foreach (Cell headerRowCell in headerRow2.Cells)
+            catch(Exception ex)
             {
-                headerRowCell.BackgroundColor = Color.Gray;
-                headerRowCell.DefaultCellTextState.ForegroundColor = Color.WhiteSmoke;
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
             }
-
-            foreach (LogItem logItem in logItems)
-            {
-                var dataRow1 = table1.Rows.Add();
-                dataRow1.Cells.Add(logItem.LogId.ToString());
-                dataRow1.Cells.Add(logItem.DateTime);
-                dataRow1.Cells.Add(logItem.Report);
-                dataRow1.Cells.Add(logItem.Distance);
-                dataRow1.Cells.Add(logItem.TotalTime);
-                dataRow1.Cells.Add(logItem.Rating);
-
-                var dataRow2 = table2.Rows.Add();
-                dataRow2.Cells.Add(logItem.LogId.ToString());
-                dataRow2.Cells.Add(logItem.AvgSpeed);
-                dataRow2.Cells.Add(logItem.Inclination);
-                dataRow2.Cells.Add(logItem.TopSpeed);
-                dataRow2.Cells.Add(logItem.MaxHeight);
-                dataRow2.Cells.Add(logItem.MinHeight);
-            }
-
-            page.Paragraphs.Add(table1);
-            page.Paragraphs.Add(table2);
-
-            document.Save(configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf");
-            string fileName = configFile.FsSettings.DocumentsFolderPath + tourItem.TourId.ToString() + ".pdf";
-
-            PdfViewer viewer = new PdfViewer(document);
-            viewer.PrintDocument();
+            
         }
 
         public string CreateImage(string from, string to, string path = "No path")
         {
-            string key = configFile.FsSettings.Key;
-            string imageNumber;
-            string imageFilePath;
-            string url = @"https://www.mapquestapi.com/staticmap/v5/map?start=" + from + "&end=" + to + "&size=600,400@2x&key=" + key;
-
-            if (path == "No path")
+            try
             {
-                path = picturesfolderPath;
-            }
+                string key = configFile.FsSettings.Key;
+                string imageNumber;
+                string imageFilePath;
+                string url = @"https://www.mapquestapi.com/staticmap/v5/map?start=" + from + "&end=" + to + "&size=600,400@2x&key=" + key;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip;
-
-            using (HttpWebResponse lxResponse = (HttpWebResponse)request.GetResponse())
-            {
-                using (BinaryReader reader = new BinaryReader(lxResponse.GetResponseStream()))
+                if (path == "No path")
                 {
-                    Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
-                    Random rnd = new Random();
-                    imageNumber = Convert.ToString(rnd.Next(100000));
-                    imageFilePath = path + imageNumber + ".jpg";
-                    using (FileStream lxFS = new FileStream(imageFilePath, FileMode.Create))
+                    path = picturesfolderPath;
+                }
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.AutomaticDecompression = DecompressionMethods.GZip;
+
+                using (HttpWebResponse lxResponse = (HttpWebResponse)request.GetResponse())
+                {
+                    using (BinaryReader reader = new BinaryReader(lxResponse.GetResponseStream()))
                     {
-                        lxFS.Write(lnByte, 0, lnByte.Length);
+                        Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
+                        Random rnd = new Random();
+                        imageNumber = Convert.ToString(rnd.Next(100000));
+                        imageFilePath = path + imageNumber + ".jpg";
+                        using (FileStream lxFS = new FileStream(imageFilePath, FileMode.Create))
+                        {
+                            lxFS.Write(lnByte, 0, lnByte.Length);
+                        }
                     }
                 }
+                return imageFilePath;
             }
-            return imageFilePath;
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+                return strResponseValue;
+            }
         }
 
         public void DeleteImage(string path = "No path")
         {
-            if (path == "No path")
+            try
             {
-                path = toDeleteFilePath;
-            }
-
-            string json = File.ReadAllText(path);
-            List<ImagesToBeDeleted> images = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(json);
-            if (images != null)
-            {
-                foreach (ImagesToBeDeleted image in images)
+                if (path == "No path")
                 {
-                    File.Delete(image.PathToDelete);
+                    path = toDeleteFilePath;
                 }
-                File.WriteAllText(path, String.Empty);
-            }
 
+                string json = File.ReadAllText(path);
+                List<ImagesToBeDeleted> images = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(json);
+                if (images != null)
+                {
+                    foreach (ImagesToBeDeleted image in images)
+                    {
+                        File.Delete(image.PathToDelete);
+                    }
+                    File.WriteAllText(path, String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public void SaveImagePath(string path, string deletePath = "No path")
         {
-            if (deletePath == "No path")
+            try
             {
-                deletePath = toDeleteFilePath;
-            }
-            string initialJson = File.ReadAllText(deletePath);
-            var list = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(initialJson);
-            ImagesToBeDeleted image = new ImagesToBeDeleted() { PathToDelete = path };
-            if (list == null)
-            {
-                list = new List<ImagesToBeDeleted>();
-            }
-            list.Add(image);
+                if (deletePath == "No path")
+                {
+                    deletePath = toDeleteFilePath;
+                }
+                string initialJson = File.ReadAllText(deletePath);
+                var list = JsonConvert.DeserializeObject<List<ImagesToBeDeleted>>(initialJson);
+                ImagesToBeDeleted image = new ImagesToBeDeleted() { PathToDelete = path };
+                if (list == null)
+                {
+                    list = new List<ImagesToBeDeleted>();
+                }
+                list.Add(image);
 
-            string output = JsonConvert.SerializeObject(list, Formatting.Indented);
-            File.WriteAllText(deletePath, output);
+                string output = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText(deletePath, output);
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public void DeleteItem(int tourid)
@@ -260,16 +295,22 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void Export(List<ExportObject> exportObjects)
         {
-            JsonSerializer serializer = new JsonSerializer();
-
-            serializer.NullValueHandling = NullValueHandling.Ignore;
-            string fileName = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
-            using (StreamWriter sw = new StreamWriter(configFile.FsSettings.JsonExports + fileName + ".json"))
-            using (JsonWriter writer = new JsonTextWriter(sw))
+            try
             {
+                JsonSerializer serializer = new JsonSerializer();
 
-                serializer.Serialize(writer, exportObjects);
-
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+                string fileName = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+                using (StreamWriter sw = new StreamWriter(configFile.FsSettings.JsonExports + fileName + ".json"))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, exportObjects);
+                }
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
             }
         }
     }

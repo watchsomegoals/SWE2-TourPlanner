@@ -14,6 +14,8 @@ namespace SWE2TourPlanner.ViewModels
 {
     public class TourModifyViewModel : ViewModelBase, INotifyDataErrorInfo
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string description;
         private RouteType currentRoute;
         private TourItem currentTour;
@@ -94,6 +96,9 @@ namespace SWE2TourPlanner.ViewModels
         {
             if (!string.IsNullOrEmpty(Description) && CurrentRoute != null)
             {
+                string logs = "Tour with id: " + CurrentTour.TourId + " modified.";
+                log.Info(logs);
+
                 this.tourItemFactory.ModifyTour(CurrentTour, Description, CurrentRoute.TypeRoute);
                 var window = (Window)commandParameter;
                 window.Close();
