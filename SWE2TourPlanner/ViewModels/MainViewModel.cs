@@ -16,6 +16,8 @@ namespace SWE2TourPlanner.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private ITourItemFactory tourItemFactory;
         private TourItem currentItem;
         private LogItem currentLog;
@@ -268,6 +270,9 @@ namespace SWE2TourPlanner.ViewModels
         {
             if(CurrentItem != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
+                string logs = "Tour with id: " + CurrentItem.TourId + " deleted.";
+                log.Info(logs);
+
                 string path = CurrentItem.ImagePath;
                 this.tourItemFactory.DeleteItemAndSavePath(CurrentItem.TourId, path);
                 TourItems.Clear();
@@ -284,6 +289,9 @@ namespace SWE2TourPlanner.ViewModels
         {
             if (CurrentLog != null && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpAddLogVisible && !IsPopUpCreatePdfVisible)
             {
+                string logs = "Log with id: " + CurrentLog.LogId + " deleted.";
+                log.Info(logs);
+
                 this.tourItemFactory.DeleteLog(CurrentLog.LogId);
                 LogItems.Clear();
                 FillDataGrid(CurrentItem.TourId);

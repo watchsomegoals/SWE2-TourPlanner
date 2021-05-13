@@ -12,6 +12,8 @@ namespace SWE2TourPlanner.DataAccessLayer
 {
     class Database : IDataAccess
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string connectionString;
         private List<TourItem> tourItems = new List<TourItem>();
         private List<LogItem> logItems = new List<LogItem>();
@@ -31,47 +33,64 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void AddItem(string name, string from, string to, string imagePath, string description, string route)
         {
-            int tourId = 0;
-            string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + from + "&to=" + to + "&routeType=" + route;
-
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                var json = webClient.DownloadString(url);
-                RequestData reqObj = JsonConvert.DeserializeObject<RequestData>(json);
+                int tourId = 0;
+                string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + from + "&to=" + to + "&routeType=" + route;
 
-                TimeSpan time = TimeSpan.FromSeconds(reqObj.route.Time);
-                string str = time.ToString(@"hh\:mm\:ss");
-                reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
+                using (var webClient = new System.Net.WebClient())
+                {
+                    var json = webClient.DownloadString(url);
+                    RequestData reqObj = JsonConvert.DeserializeObject<RequestData>(json);
 
-                description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
-                              "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: "+ route +"\nFrom: " + from + "\nTo: " + to;
-             
-                tourId = GetTourItemIdForInsert();
+                    TimeSpan time = TimeSpan.FromSeconds(reqObj.route.Time);
+                    string str = time.ToString(@"hh\:mm\:ss");
+                    reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
 
-                InsertTour(tourId, name, description, from, to, imagePath, route);
+                    description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
+                                  "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: " + route + "\nFrom: " + from + "\nTo: " + to;
+
+                    tourId = GetTourItemIdForInsert();
+
+                    InsertTour(tourId, name, description, from, to, imagePath, route);
+                }
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
             }
         }
 
         public void InsertTour(int tourId, string name, string description, string from, string to, string imagePath, string route)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
 
-            string strcomm = "INSERT INTO tours (tourid, name, description, startpoint, endpoint, path, route) VALUES (@tourid, @name, @description, @startpoint, @endpoint, @path, @route)";
-            NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
+                string strcomm = "INSERT INTO tours (tourid, name, description, startpoint, endpoint, path, route) VALUES (@tourid, @name, @description, @startpoint, @endpoint, @path, @route)";
+                NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
 
-            sqlcomm.Parameters.AddWithValue("tourid", tourId);
-            sqlcomm.Parameters.AddWithValue("name", name);
-            sqlcomm.Parameters.AddWithValue("description", description);
-            sqlcomm.Parameters.AddWithValue("startpoint", from);
-            sqlcomm.Parameters.AddWithValue("endpoint", to);
-            sqlcomm.Parameters.AddWithValue("path", imagePath);
-            sqlcomm.Parameters.AddWithValue("route", route);
+                sqlcomm.Parameters.AddWithValue("tourid", tourId);
+                sqlcomm.Parameters.AddWithValue("name", name);
+                sqlcomm.Parameters.AddWithValue("description", description);
+                sqlcomm.Parameters.AddWithValue("startpoint", from);
+                sqlcomm.Parameters.AddWithValue("endpoint", to);
+                sqlcomm.Parameters.AddWithValue("path", imagePath);
+                sqlcomm.Parameters.AddWithValue("route", route);
+
+                sqlcomm.Prepare();
+                sqlcomm.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
             
-            sqlcomm.Prepare();
-            sqlcomm.ExecuteNonQuery();
-
-            conn.Close();
         }
 
         public int GetTourItemIdForInsert()
@@ -103,76 +122,107 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public bool DoesTourExist(int tourid)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-
-            string strcount = "Select count(*) from tours where tourid = @tourid";
-
-            NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
-            sqlcount.Parameters.AddWithValue("tourid", tourid);
-
-            Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
-
-            if(count == 0)
+            try
             {
-                conn.Close();
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                string strcount = "Select count(*) from tours where tourid = @tourid";
+
+                NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
+                sqlcount.Parameters.AddWithValue("tourid", tourid);
+
+                Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
+
+                if (count == 0)
+                {
+                    conn.Close();
+                    return false;
+                }
+                else
+                {
+                    conn.Close();
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            
         }
 
         public bool DoesLogExist(int logid)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-
-            string strcount = "Select count(*) from logs where logid = @logid";
-
-            NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
-            sqlcount.Parameters.AddWithValue("logid", logid);
-
-            Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
-
-            if (count == 0)
+            try
             {
-                conn.Close();
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                string strcount = "Select count(*) from logs where logid = @logid";
+
+                NpgsqlCommand sqlcount = new NpgsqlCommand(strcount, conn);
+                sqlcount.Parameters.AddWithValue("logid", logid);
+
+                Int32 count = Convert.ToInt32(sqlcount.ExecuteScalar());
+
+                if (count == 0)
+                {
+                    conn.Close();
+                    return false;
+                }
+                else
+                {
+                    conn.Close();
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
                 return false;
             }
-            else
-            {
-                return true;
-            }
+            
         }
 
         public void AddLog(int tourid, string dateTime, string report, string distance, string totalTime, string rating, string avgSpeed, string inclination, string topSpeed, string maxHeight, string minHeight)
         {
-            int logId = GetLogItemIdForInsert();
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
+            try
+            {
+                int logId = GetLogItemIdForInsert();
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
 
-            string strcomm = "INSERT INTO logs (logid, fk_tourid, datetime, report, distance, totaltime, rating, avgspeed, inclination, topspeed, maxheight, minheight) VALUES (@logid, @fk_tourid, @datetime, @report, @distance, @totaltime, @rating, @avgspeed, @inclination, @topspeed, @maxheight, @minheight)";
-            NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
+                string strcomm = "INSERT INTO logs (logid, fk_tourid, datetime, report, distance, totaltime, rating, avgspeed, inclination, topspeed, maxheight, minheight) VALUES (@logid, @fk_tourid, @datetime, @report, @distance, @totaltime, @rating, @avgspeed, @inclination, @topspeed, @maxheight, @minheight)";
+                NpgsqlCommand sqlcomm = new NpgsqlCommand(strcomm, conn);
 
-            sqlcomm.Parameters.AddWithValue("logid", logId);
-            sqlcomm.Parameters.AddWithValue("fk_tourid", tourid);
-            sqlcomm.Parameters.AddWithValue("datetime", dateTime);
-            sqlcomm.Parameters.AddWithValue("report", report);
-            sqlcomm.Parameters.AddWithValue("distance", distance);
-            sqlcomm.Parameters.AddWithValue("totaltime", totalTime);
-            sqlcomm.Parameters.AddWithValue("rating", rating);
-            sqlcomm.Parameters.AddWithValue("avgspeed", avgSpeed);
-            sqlcomm.Parameters.AddWithValue("inclination", inclination);
-            sqlcomm.Parameters.AddWithValue("topspeed", topSpeed);
-            sqlcomm.Parameters.AddWithValue("maxheight", maxHeight);
-            sqlcomm.Parameters.AddWithValue("minheight", minHeight);
+                sqlcomm.Parameters.AddWithValue("logid", logId);
+                sqlcomm.Parameters.AddWithValue("fk_tourid", tourid);
+                sqlcomm.Parameters.AddWithValue("datetime", dateTime);
+                sqlcomm.Parameters.AddWithValue("report", report);
+                sqlcomm.Parameters.AddWithValue("distance", distance);
+                sqlcomm.Parameters.AddWithValue("totaltime", totalTime);
+                sqlcomm.Parameters.AddWithValue("rating", rating);
+                sqlcomm.Parameters.AddWithValue("avgspeed", avgSpeed);
+                sqlcomm.Parameters.AddWithValue("inclination", inclination);
+                sqlcomm.Parameters.AddWithValue("topspeed", topSpeed);
+                sqlcomm.Parameters.AddWithValue("maxheight", maxHeight);
+                sqlcomm.Parameters.AddWithValue("minheight", minHeight);
 
-            sqlcomm.Prepare();
-            sqlcomm.ExecuteNonQuery();
+                sqlcomm.Prepare();
+                sqlcomm.ExecuteNonQuery();
 
-            conn.Close();
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public int GetLogItemIdForInsert()
@@ -204,39 +254,55 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void DeleteItem(int tourid)
         {
-            tourItems.RemoveAt(tourItems.FindIndex(item => item.TourId == tourid));
+            try
+            {
+                tourItems.RemoveAt(tourItems.FindIndex(item => item.TourId == tourid));
 
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
 
-            string logdelete = "Delete from logs where fk_tourid = @tourid";
-            NpgsqlCommand sqllogdelete = new NpgsqlCommand(logdelete, conn);
-            sqllogdelete.Parameters.AddWithValue("tourid", tourid);
-            sqllogdelete.Prepare();
-            sqllogdelete.ExecuteNonQuery();
+                string logdelete = "Delete from logs where fk_tourid = @tourid";
+                NpgsqlCommand sqllogdelete = new NpgsqlCommand(logdelete, conn);
+                sqllogdelete.Parameters.AddWithValue("tourid", tourid);
+                sqllogdelete.Prepare();
+                sqllogdelete.ExecuteNonQuery();
 
-            string strdelete = "Delete from tours where tourid = @tourid";
-            NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
-            sqldelete.Parameters.AddWithValue("tourid", tourid);
-            sqldelete.Prepare();
-            sqldelete.ExecuteNonQuery();
+                string strdelete = "Delete from tours where tourid = @tourid";
+                NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
+                sqldelete.Parameters.AddWithValue("tourid", tourid);
+                sqldelete.Prepare();
+                sqldelete.ExecuteNonQuery();
 
-            conn.Close();
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public void DeleteLog(int logid)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
 
-            string strdelete = "Delete from logs where logid = @logid";
-            NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
+                string strdelete = "Delete from logs where logid = @logid";
+                NpgsqlCommand sqldelete = new NpgsqlCommand(strdelete, conn);
 
-            sqldelete.Parameters.AddWithValue("logid", logid);
-            sqldelete.Prepare();
-            sqldelete.ExecuteNonQuery();
+                sqldelete.Parameters.AddWithValue("logid", logid);
+                sqldelete.Prepare();
+                sqldelete.ExecuteNonQuery();
 
-            conn.Close();
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public List<LogItem> GetLogs(int tourid)
@@ -305,129 +371,146 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void ModifyTour(TourItem currentTour, string description, string route)
         {
-            string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + currentTour.From + "&to=" + currentTour.To + "&routeType=" + route;
-
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                var json = webClient.DownloadString(url);
-                RequestData reqObj = JsonConvert.DeserializeObject<RequestData>(json);
+                string url = @"http://www.mapquestapi.com/directions/v2/route?key=" + key + "&from=" + currentTour.From + "&to=" + currentTour.To + "&routeType=" + route;
 
-                TimeSpan time = TimeSpan.FromSeconds(reqObj.route.Time);
-                string str = time.ToString(@"hh\:mm\:ss");
-                reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
+                using (var webClient = new System.Net.WebClient())
+                {
+                    var json = webClient.DownloadString(url);
+                    RequestData reqObj = JsonConvert.DeserializeObject<RequestData>(json);
 
-                description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
-                              "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: " + route + "\nFrom: " + currentTour.From + "\nTo: " + currentTour.To;
+                    TimeSpan time = TimeSpan.FromSeconds(reqObj.route.Time);
+                    string str = time.ToString(@"hh\:mm\:ss");
+                    reqObj.route.Distance = Math.Round(reqObj.route.Distance * 1.60934, 2);
+
+                    description += "\n\nDistance: " + reqObj.route.Distance + " km" + "\nTime: " + str + "\nHas Highway: " + reqObj.route.HasHighway +
+                                  "\nHas TollRoad: " + reqObj.route.HasTollRoad + "\nRoute Type: " + route + "\nFrom: " + currentTour.From + "\nTo: " + currentTour.To;
+                }
+
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+
+                string updatetours = "Update tours set description = @description, route = @route where tourid = @tourid";
+                NpgsqlCommand sqlupdate = new NpgsqlCommand(updatetours, conn);
+                sqlupdate.Parameters.AddWithValue("description", description);
+                sqlupdate.Parameters.AddWithValue("route", route);
+                sqlupdate.Parameters.AddWithValue("tourid", currentTour.TourId);
+                sqlupdate.Prepare();
+                sqlupdate.ExecuteNonQuery();
+
+                conn.Close();
             }
-
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-
-            string updatetours = "Update tours set description = @description, route = @route where tourid = @tourid";
-            NpgsqlCommand sqlupdate = new NpgsqlCommand(updatetours, conn);
-            sqlupdate.Parameters.AddWithValue("description", description);
-            sqlupdate.Parameters.AddWithValue("route", route);
-            sqlupdate.Parameters.AddWithValue("tourid", currentTour.TourId);
-            sqlupdate.Prepare();
-            sqlupdate.ExecuteNonQuery();
-
-            conn.Close();
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
+            
         }
 
         public void ModifyLog(LogItem currentLog, string typeLogData, string newEntry)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-
-            string updatelogs = null;
-
-            switch (typeLogData)
+            try
             {
-                case "datetime":
-                    updatelogs = "Update logs set datetime = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupdate = new NpgsqlCommand(updatelogs, conn);
-                    sqlupdate.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupdate.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupdate.Prepare();
-                    sqlupdate.ExecuteNonQuery();
-                    break;
-                case "report":
-                    updatelogs = "Update logs set report = @newEntry where logid = @logid";
-                    NpgsqlCommand sqluprepo = new NpgsqlCommand(updatelogs, conn);
-                    sqluprepo.Parameters.AddWithValue("newEntry", newEntry);
-                    sqluprepo.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqluprepo.Prepare();
-                    sqluprepo.ExecuteNonQuery();
-                    break;
-                case "distance":
-                    updatelogs = "Update logs set distance = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupdist = new NpgsqlCommand(updatelogs, conn);
-                    sqlupdist.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupdist.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupdist.Prepare();
-                    sqlupdist.ExecuteNonQuery();
-                    break;
-                case "totaltime":
-                    updatelogs = "Update logs set totaltime = @newEntry where logid = @logid";
-                    NpgsqlCommand sqluptota = new NpgsqlCommand(updatelogs, conn);
-                    sqluptota.Parameters.AddWithValue("newEntry", newEntry);
-                    sqluptota.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqluptota.Prepare();
-                    sqluptota.ExecuteNonQuery();
-                    break;
-                case "rating":
-                    updatelogs = "Update logs set rating = @newEntry where logid = @logid";
-                    NpgsqlCommand sqluprati = new NpgsqlCommand(updatelogs, conn);
-                    sqluprati.Parameters.AddWithValue("newEntry", newEntry);
-                    sqluprati.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqluprati.Prepare();
-                    sqluprati.ExecuteNonQuery();
-                    break;
-                case "avgspeed":
-                    updatelogs = "Update logs set avgspeed = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupavgs = new NpgsqlCommand(updatelogs, conn);
-                    sqlupavgs.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupavgs.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupavgs.Prepare();
-                    sqlupavgs.ExecuteNonQuery();
-                    break;
-                case "inclination":
-                    updatelogs = "Update logs set inclination = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupincl = new NpgsqlCommand(updatelogs, conn);
-                    sqlupincl.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupincl.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupincl.Prepare();
-                    sqlupincl.ExecuteNonQuery();
-                    break;
-                case "topspeed":
-                    updatelogs = "Update logs set topspeed = @newEntry where logid = @logid";
-                    NpgsqlCommand sqluptops = new NpgsqlCommand(updatelogs, conn);
-                    sqluptops.Parameters.AddWithValue("newEntry", newEntry);
-                    sqluptops.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqluptops.Prepare();
-                    sqluptops.ExecuteNonQuery();
-                    break;
-                case "maxheight":
-                    updatelogs = "Update logs set maxheight = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupmaxh = new NpgsqlCommand(updatelogs, conn);
-                    sqlupmaxh.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupmaxh.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupmaxh.Prepare();
-                    sqlupmaxh.ExecuteNonQuery();
-                    break;
-                case "minheight":
-                    updatelogs = "Update logs set minheight = @newEntry where logid = @logid";
-                    NpgsqlCommand sqlupminh = new NpgsqlCommand(updatelogs, conn);
-                    sqlupminh.Parameters.AddWithValue("newEntry", newEntry);
-                    sqlupminh.Parameters.AddWithValue("logid", currentLog.LogId);
-                    sqlupminh.Prepare();
-                    sqlupminh.ExecuteNonQuery();
-                    break;
-                default:
-                    break;
-            }
+                NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+                conn.Open();
 
-            conn.Close();
+                string updatelogs = null;
+
+                switch (typeLogData)
+                {
+                    case "datetime":
+                        updatelogs = "Update logs set datetime = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupdate = new NpgsqlCommand(updatelogs, conn);
+                        sqlupdate.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupdate.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupdate.Prepare();
+                        sqlupdate.ExecuteNonQuery();
+                        break;
+                    case "report":
+                        updatelogs = "Update logs set report = @newEntry where logid = @logid";
+                        NpgsqlCommand sqluprepo = new NpgsqlCommand(updatelogs, conn);
+                        sqluprepo.Parameters.AddWithValue("newEntry", newEntry);
+                        sqluprepo.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqluprepo.Prepare();
+                        sqluprepo.ExecuteNonQuery();
+                        break;
+                    case "distance":
+                        updatelogs = "Update logs set distance = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupdist = new NpgsqlCommand(updatelogs, conn);
+                        sqlupdist.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupdist.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupdist.Prepare();
+                        sqlupdist.ExecuteNonQuery();
+                        break;
+                    case "totaltime":
+                        updatelogs = "Update logs set totaltime = @newEntry where logid = @logid";
+                        NpgsqlCommand sqluptota = new NpgsqlCommand(updatelogs, conn);
+                        sqluptota.Parameters.AddWithValue("newEntry", newEntry);
+                        sqluptota.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqluptota.Prepare();
+                        sqluptota.ExecuteNonQuery();
+                        break;
+                    case "rating":
+                        updatelogs = "Update logs set rating = @newEntry where logid = @logid";
+                        NpgsqlCommand sqluprati = new NpgsqlCommand(updatelogs, conn);
+                        sqluprati.Parameters.AddWithValue("newEntry", newEntry);
+                        sqluprati.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqluprati.Prepare();
+                        sqluprati.ExecuteNonQuery();
+                        break;
+                    case "avgspeed":
+                        updatelogs = "Update logs set avgspeed = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupavgs = new NpgsqlCommand(updatelogs, conn);
+                        sqlupavgs.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupavgs.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupavgs.Prepare();
+                        sqlupavgs.ExecuteNonQuery();
+                        break;
+                    case "inclination":
+                        updatelogs = "Update logs set inclination = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupincl = new NpgsqlCommand(updatelogs, conn);
+                        sqlupincl.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupincl.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupincl.Prepare();
+                        sqlupincl.ExecuteNonQuery();
+                        break;
+                    case "topspeed":
+                        updatelogs = "Update logs set topspeed = @newEntry where logid = @logid";
+                        NpgsqlCommand sqluptops = new NpgsqlCommand(updatelogs, conn);
+                        sqluptops.Parameters.AddWithValue("newEntry", newEntry);
+                        sqluptops.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqluptops.Prepare();
+                        sqluptops.ExecuteNonQuery();
+                        break;
+                    case "maxheight":
+                        updatelogs = "Update logs set maxheight = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupmaxh = new NpgsqlCommand(updatelogs, conn);
+                        sqlupmaxh.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupmaxh.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupmaxh.Prepare();
+                        sqlupmaxh.ExecuteNonQuery();
+                        break;
+                    case "minheight":
+                        updatelogs = "Update logs set minheight = @newEntry where logid = @logid";
+                        NpgsqlCommand sqlupminh = new NpgsqlCommand(updatelogs, conn);
+                        sqlupminh.Parameters.AddWithValue("newEntry", newEntry);
+                        sqlupminh.Parameters.AddWithValue("logid", currentLog.LogId);
+                        sqlupminh.Prepare();
+                        sqlupminh.ExecuteNonQuery();
+                        break;
+                    default:
+                        break;
+                }
+
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public string CreateImage(string from, string to, string path = "No path")

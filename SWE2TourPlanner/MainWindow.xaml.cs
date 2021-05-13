@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace SWE2TourPlanner
 {
     /// <summary>
