@@ -31,7 +31,7 @@ namespace SWE2TourPlanner.ViewModels
         private ICommand addLogCommand;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        private readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
+        public readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
 
         public ICommand AddLogCommand => addLogCommand ??= new RelayCommand(AddLog);
 
@@ -230,7 +230,7 @@ namespace SWE2TourPlanner.ViewModels
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        private bool ValidateDateTime()
+        public bool ValidateDateTime()
         {
             Regex regex = new Regex(@"^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$");
             ClearErrors(nameof(DateTime));
@@ -248,7 +248,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateReport()
+        public bool ValidateReport()
         {
             ClearErrors(nameof(Report));
 
@@ -265,7 +265,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateDistance()
+        public bool ValidateDistance()
         {
             bool res;
             float distance;
@@ -293,7 +293,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateTotalTime()
+        public bool ValidateTotalTime()
         {
             Regex regex = new Regex(@"^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)$");
             ClearErrors(nameof(TotalTime));
@@ -311,7 +311,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateRating()
+        public bool ValidateRating()
         {
             bool res;
             int rating;

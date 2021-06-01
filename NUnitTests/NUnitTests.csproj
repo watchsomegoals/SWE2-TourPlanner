@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SWE2TourPlanner.DataAccessLayer\SWE2TourPlanner.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\SWE2TourPlanner\SWE2TourPlanner.csproj" />
   </ItemGroup>
 
 </Project>
