@@ -84,6 +84,7 @@ namespace SWE2TourPlanner.ViewModels
 
         public ObservableCollection<TourItem> TourItems { get; set; }
         public ObservableCollection<LogItem> LogItems { get; set; }
+        public DescriptionControlViewModel DescriptionControlViewModel { get; set; }
 
         public LogItem CurrentLog
         {

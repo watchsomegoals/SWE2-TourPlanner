@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" xmlns:Models="clr-namespace:SWE2TourPlanner.Models;assembly=SWE2TourPlanner.Models" x:Class="SWE2TourPlanner.MainWindow"
+        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" xmlns:Models="clr-namespace:SWE2TourPlanner.Models;assembly=SWE2TourPlanner.Models" xmlns:view="clr-namespace:SWE2TourPlanner.View" x:Class="SWE2TourPlanner.MainWindow"
         d:DataContext="{d:DesignInstance Type={x:Type viewmodels:MainViewModel}}"
         mc:Ignorable="d"
         Title="Tour-Planner" Height="500" Width="850">
@@ -191,8 +191,9 @@
                                 <Image Source="{Binding ElementName=listTourItems, Path=SelectedItem.ImagePath}" />
                             </TabItem>
                             <TabItem Header="Description">
-                                <TextBlock Text="{Binding ElementName=listTourItems, Path=SelectedItem.Description}"
-                                           TextWrapping="WrapWithOverflow"/>
+                                <!--<TextBlock Text="{Binding ElementName=listTourItems, Path=SelectedItem.Description}"
+                                           TextWrapping="WrapWithOverflow"/>-->
+                                <view:DescriptionControl Content="{Binding CurrentItem.Description}"/>
                             </TabItem>
                         </TabControl>
                     </Grid>

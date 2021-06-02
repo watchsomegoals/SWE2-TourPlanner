@@ -339,7 +339,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateAvgSpeed()
+        public bool ValidateAvgSpeed()
         {
             bool res;
             int avgSpeed;
@@ -367,7 +367,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateInclination()
+        public bool ValidateInclination()
         {
             bool res;
             int inclination;
@@ -395,7 +395,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateTopSpeed()
+        public bool ValidateTopSpeed()
         {
             bool res;
             int topSpeed;
@@ -423,7 +423,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateMaxHeight()
+        public bool ValidateMaxHeight()
         {
             bool res;
             int maxHeight;
@@ -451,7 +451,7 @@ namespace SWE2TourPlanner.ViewModels
             return true;
         }
 
-        private bool ValidateMinHeight()
+        public bool ValidateMinHeight()
         {
             bool res;
             int minHeight;
