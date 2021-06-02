@@ -149,5 +149,164 @@ namespace NUnitTests
             Assert.IsTrue(res);
         }
 
+        [Test, Order(17)]
+        public void ValidateAvgSpeedTestNull()
+        {
+            logAddViewModel.AvgSpeed = null;
+            logAddViewModel.ValidateAvgSpeed();
+            Assert.AreEqual("Average Speed cannot be empty.", logAddViewModel._errorsByPropertyName["AvgSpeed"][0]);
+        }
+
+        [Test, Order(18)]
+        public void ValidateAvgSpeedTestDataType()
+        {
+            logAddViewModel.AvgSpeed = "27.7";
+            logAddViewModel.ValidateAvgSpeed();
+            Assert.AreEqual("Average Speed has to be an integer.", logAddViewModel._errorsByPropertyName["AvgSpeed"][0]);
+        }
+
+        [Test, Order(19)]
+        public void ValidateAvgSpeedTestTooBig()
+        {
+            logAddViewModel.AvgSpeed = "201";
+            logAddViewModel.ValidateAvgSpeed();
+            Assert.AreEqual("Average Speed has to be between 1 and 200 km/h.", logAddViewModel._errorsByPropertyName["AvgSpeed"][0]);
+        }
+
+        [Test, Order(20)]
+        public void ValidateAvgSpeedTestCorrect()
+        {
+            logAddViewModel.AvgSpeed = "7";
+            res = logAddViewModel.ValidateAvgSpeed();
+            Assert.IsTrue(res);
+        }
+
+        [Test, Order(21)]
+        public void ValidateInclinationTestNull()
+        {
+            logAddViewModel.Inclination = null;
+            logAddViewModel.ValidateInclination();
+            Assert.AreEqual("Inclination cannot be empty.", logAddViewModel._errorsByPropertyName["Inclination"][0]);
+        }
+
+        [Test, Order(22)]
+        public void ValidateInclinationTestDataType()
+        {
+            logAddViewModel.Inclination = "27.7";
+            logAddViewModel.ValidateInclination();
+            Assert.AreEqual("Inclination has to be an integer.", logAddViewModel._errorsByPropertyName["Inclination"][0]);
+        }
+
+        [Test, Order(23)]
+        public void ValidateInclinationTestTooBig()
+        {
+            logAddViewModel.Inclination = "71";
+            logAddViewModel.ValidateInclination();
+            Assert.AreEqual("Inclination has to be between 1 and 70 degrees.", logAddViewModel._errorsByPropertyName["Inclination"][0]);
+        }
+
+        [Test, Order(24)]
+        public void ValidateInclinationTestCorrect()
+        {
+            logAddViewModel.Inclination = "69";
+            res = logAddViewModel.ValidateInclination();
+            Assert.IsTrue(res);
+        }
+
+        [Test, Order(25)]
+        public void ValidateTopSpeedTestNull()
+        {
+            logAddViewModel.TopSpeed = null;
+            logAddViewModel.ValidateTopSpeed();
+            Assert.AreEqual("Top Speed cannot be empty.", logAddViewModel._errorsByPropertyName["TopSpeed"][0]);
+        }
+
+        [Test, Order(26)]
+        public void ValidateTopSpeedTestDataType()
+        {
+            logAddViewModel.TopSpeed = "27.7";
+            logAddViewModel.ValidateTopSpeed();
+            Assert.AreEqual("Top Speed has to be an integer.", logAddViewModel._errorsByPropertyName["TopSpeed"][0]);
+        }
+
+        [Test, Order(27)]
+        public void ValidateTopSpeedTestTooBig()
+        {
+            logAddViewModel.TopSpeed = "301";
+            logAddViewModel.ValidateTopSpeed();
+            Assert.AreEqual("Top Speed has to be between 1 and 300 km/h.", logAddViewModel._errorsByPropertyName["TopSpeed"][0]);
+        }
+
+        [Test, Order(28)]
+        public void ValidateTopSpeedTestCorrect()
+        {
+            logAddViewModel.TopSpeed = "69";
+            res = logAddViewModel.ValidateTopSpeed();
+            Assert.IsTrue(res);
+        }
+
+        [Test, Order(29)]
+        public void ValidateMaxHeightTestNull()
+        {
+            logAddViewModel.MaxHeight = null;
+            logAddViewModel.ValidateMaxHeight();
+            Assert.AreEqual("Max Height cannot be empty.", logAddViewModel._errorsByPropertyName["MaxHeight"][0]);
+        }
+
+        [Test, Order(30)]
+        public void ValidateMaxHeightTestDataType()
+        {
+            logAddViewModel.MaxHeight = "27.7";
+            logAddViewModel.ValidateMaxHeight();
+            Assert.AreEqual("Max Height has to be an integer.", logAddViewModel._errorsByPropertyName["MaxHeight"][0]);
+        }
+
+        [Test, Order(31)]
+        public void ValidateMaxHeightTestTooBig()
+        {
+            logAddViewModel.MaxHeight = "10001";
+            logAddViewModel.ValidateMaxHeight();
+            Assert.AreEqual("Max Height has to be between 1 and 10000 metres.", logAddViewModel._errorsByPropertyName["MaxHeight"][0]);
+        }
+        
+        [Test, Order(32)]
+        public void ValidateMaxHeightTestCorrect()
+        {
+            logAddViewModel.MaxHeight = "1000";
+            res = logAddViewModel.ValidateMaxHeight();
+            Assert.IsTrue(res);
+        }
+
+        [Test, Order(33)]
+        public void ValidateMinHeightTestNull()
+        {
+            logAddViewModel.MinHeight = null;
+            logAddViewModel.ValidateMinHeight();
+            Assert.AreEqual("Min Height cannot be empty.", logAddViewModel._errorsByPropertyName["MinHeight"][0]);
+        }
+
+        [Test, Order(34)]
+        public void ValidateMinHeightTestDataType()
+        {
+            logAddViewModel.MinHeight = "27.7";
+            logAddViewModel.ValidateMinHeight();
+            Assert.AreEqual("Min Height has to be an integer.", logAddViewModel._errorsByPropertyName["MinHeight"][0]);
+        }
+
+        [Test, Order(35)]
+        public void ValidateMinHeightTestTooBig()
+        {
+            logAddViewModel.MinHeight = "10001";
+            logAddViewModel.ValidateMinHeight();
+            Assert.AreEqual("Min Height has to be between 1 and 10000 metres.", logAddViewModel._errorsByPropertyName["MinHeight"][0]);
+        }
+
+        [Test, Order(36)]
+        public void ValidateMinHeightTestCorrect()
+        {
+            logAddViewModel.MinHeight = "1000";
+            res = logAddViewModel.ValidateMinHeight();
+            Assert.IsTrue(res);
+        }
     }
 }
