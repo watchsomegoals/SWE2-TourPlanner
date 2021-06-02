@@ -52,6 +52,7 @@ namespace SWE2TourPlanner.ViewModels
         private ICommand closeCreatePdfPopUpCommand;
         private ICommand exportCommand;
         private ICommand importCommand;
+        private ICommand popUpCopyLogCommand;
 
         public ICommand PopUpAddCommand => popUpAddCommand ??= new RelayCommand(PopUpAdd);
         public ICommand DeleteTourCommand => deleteTourCommand ??= new RelayCommand(DeleteTour);
@@ -76,11 +77,13 @@ namespace SWE2TourPlanner.ViewModels
         public ICommand CloseCreatePdfPopUpCommand => closeCreatePdfPopUpCommand ??= new RelayCommand(CloseCreatePdfPopUp);
         public ICommand ExportCommand => exportCommand ??= new RelayCommand(Export);
         public ICommand ImportCommand => importCommand ??= new RelayCommand(Import);
+        public ICommand PopUpCopyLogCommand => popUpCopyLogCommand ??= new RelayCommand(PopUpCopyLog);
 
         //public TourAddViewModel tourAddViewModel;
         public LogAddViewModel logAddViewModel;
         public TourModifyViewModel tourModifyViewModel;
         public LogModifyViewModel logModifyViewModel;
+        public LogCopyViewModel logCopyViewModel;
 
         public ObservableCollection<TourItem> TourItems { get; set; }
         public ObservableCollection<LogItem> LogItems { get; set; }
@@ -264,6 +267,23 @@ namespace SWE2TourPlanner.ViewModels
             else if(CurrentItem == null && !IsPopUpAddLogVisible && !IsPopUpDeleteTourVisible && !IsPopUpModifyTourVisible && !IsPopUpDeleteLogVisible && !IsPopUpModifyLogVisible && !IsPopUpCreatePdfVisible)
             {
                 OpenAddLogPopUp(commandParameter);
+            }
+        }
+
+        private void PopUpCopyLog(object commandParameter)
+        {
+            if(CurrentLog != null)
+            {
+                this.logCopyViewModel = new LogCopyViewModel();
+                logCopyViewModel.CurrentLog = CurrentLog;
+                logCopyViewModel.TourItems = TourItems;
+                LogCopyWindow view = new LogCopyWindow();
+                view.DataContext = this.logCopyViewModel;
+
+                view.ShowDialog();
+
+                TourItems.Clear();
+                FillListBox();
             }
         }
 
