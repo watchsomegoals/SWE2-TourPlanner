@@ -157,12 +157,12 @@
 
                     <TextBlock Text="Tours" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                    <Button Content="+" Grid.Column="1" Margin="1"
+                    <Button Content="+" Grid.Column="1" Margin="8,1"
                             Command="{Binding PopUpAddCommand}"/>
 
-                    <Button Content="-" Grid.Column="2" Margin="1"
+                    <Button Content="-" Grid.Column="2" Margin="8,1"
                             Command="{Binding DeleteTourCommand}"/>
-                    <Button Content="..." Grid.Column="3" Margin="1,1,0,1"
+                    <Button Content="..." Grid.Column="3" Margin="8,1"
                             Command="{Binding PopUpModifyTourCommand}"/>
                 </Grid>
 
@@ -216,18 +216,21 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Logs" VerticalAlignment="Center" Margin="2,0,0,0"/>
-                        <Button Content="+" Grid.Column="7" Margin="1"
+                        <Button Content="+" Grid.Column="7" Margin="10,1"
                                 Command="{Binding PopUpAddLogCommand}"/>
-                        <Button Content="-" Grid.Column="8" Margin="1"
+                        <Button Content="-" Grid.Column="8" Margin="10,1"
                                 Command="{Binding DeleteLogCommand}"/>
-                        <Button Content="..." Grid.Column="9" Margin="1,1,0,1"
+                        <Button Content="..." Grid.Column="9" Margin="10,1"
                                 Command="{Binding PopUpModifyLogCommand}"/>
+                        <Button Content="[]" Grid.Column="10" Margin="10,1"
+                                Command="{Binding PopUpCopyLogCommand}"/>
 
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" BorderBrush="Black" BorderThickness="1"/>
-                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10"
+                        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11"
                                   ItemsSource="{Binding LogItems}" AutoGenerateColumns="False"
                                   SelectedItem="{Binding CurrentLog}">
                             <DataGrid.Columns>

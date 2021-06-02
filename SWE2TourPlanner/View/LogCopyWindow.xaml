@@ -1,0 +1,55 @@
+﻿<Window x:Class="SWE2TourPlanner.View.LogCopyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:SWE2TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LogCopyViewModel}"
+        mc:Ignorable="d"
+        Title="LogCopyWindow" Height="450" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="1" Grid.Row="1"
+            Content="Choose Tour to copy Log to:"/>
+        </Grid>
+        
+        <ListBox Grid.Column="1" Grid.Row="1"
+            x:Name="listTourItems"
+            ItemsSource="{Binding TourItems}"
+            SelectedItem="{Binding CurrentTour}"
+            DisplayMemberPath="Name" />
+        
+        
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1"
+                    Content="Copy" Command="{Binding CopyLogCommand}" 
+                    CommandParameter="{Binding RelativeSource={
+                    RelativeSource AncestorType={x:Type Window}}}" Margin="0,35,0,15"/>
+        </Grid>
+    </Grid>
+</Window>

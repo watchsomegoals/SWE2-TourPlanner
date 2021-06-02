@@ -150,10 +150,8 @@ namespace SWE2TourPlanner.BusinessLayer
                         AddLog(exportObject.Item.TourId, logItem.DateTime, logItem.Report, logItem.Distance, logItem.TotalTime, 
                             logItem.Rating, logItem.AvgSpeed, logItem.Inclination, logItem.TopSpeed, logItem.MaxHeight, logItem.MinHeight);
                     }
-                }
-                
+                }   
             }
-             
         }
     }
 }

@@ -53,3 +53,5 @@ C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\bin\Debug\netcoreap
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\DescriptionControl.g.cs
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\DescriptionControl.baml
 C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogCopyWindow.g.cs
+C:\Users\Lucian\Desktop\swe2\SWE2TourPlanner\SWE2TourPlanner\obj\Debug\netcoreapp3.1\View\LogCopyWindow.baml

@@ -13,6 +13,9 @@
     <Compile Update="View\LogAddWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\LogCopyWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\LogModifyWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\LogAddWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\LogCopyWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\LogModifyWindow.xaml">
