@@ -100,5 +100,40 @@ namespace SWE2TourPlanner.DataAccessLayer
         {
             dataAccess.Export(exportObjects);
         }
+
+        public int GetToursCount()
+        {
+            return dataAccess.GetToursCount();
+        }
+
+        public float GetDistanceSum()
+        {
+            return dataAccess.GetDistanceSum();
+        }
+
+        public int GetLogsCount()
+        {
+            return dataAccess.GetLogsCount();
+        }
+
+        public int GetRatingSum()
+        {
+            return dataAccess.GetRatingSum();
+        }
+
+        public int GetAvgSpeedSum()
+        {
+            return dataAccess.GetAvgSpeedSum();
+        }
+
+        public int GetTopSpeed()
+        {
+            return dataAccess.GetTopSpeed();
+        }
+        
+        public void CreatePdfSummary(int tourNr, int logsNr, float distanceSum, float distanceAvg, float ratingAvg, float avgSpeedAvg, int topSpeed)
+        {
+            dataAccess.CreatePdfSummary(tourNr, logsNr, distanceSum, distanceAvg, ratingAvg, avgSpeedAvg, topSpeed);
+        }
     }
 }

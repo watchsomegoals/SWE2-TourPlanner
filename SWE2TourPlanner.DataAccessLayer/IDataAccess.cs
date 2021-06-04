@@ -22,5 +22,12 @@ namespace SWE2TourPlanner.DataAccessLayer
         public bool DoesTourExist(int tourid);
         public bool DoesLogExist(int logid);
         public void Export(List<ExportObject> exportObjects);
+        public int GetToursCount();
+        public float GetDistanceSum();
+        public int GetLogsCount();
+        public int GetRatingSum();
+        public int GetAvgSpeedSum();
+        public int GetTopSpeed();
+        public void CreatePdfSummary(int tourNr, int logsNr, float distanceSum, float distanceAvg, float ratingAvg, float avgSpeedAvg, int topSpeed);
     }
 }

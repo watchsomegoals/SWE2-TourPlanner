@@ -59,12 +59,15 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Button Margin="5,0,2.5,0" Grid.Column="0" Content="Search" Command="{Binding SearchCommand}"/>
                     <Button Margin="2.5,0,2.5,0" Grid.Column="1" Content="Clear" Command="{Binding ClearCommand}"/>
-                    <Button Margin="2.5,0,2.5,0" Grid.Column="2" Content="PDF" Command="{Binding CreatePdfCommand}"/>
-                    <Button Margin="2.5,0,2.5,0" Grid.Column="3" Content="Export" Command="{Binding ExportCommand}"/>
-                    <Button Margin="2.5,0,5,0" Grid.Column="4" Content="Import" Command="{Binding ImportCommand}"/>
+                    <Button Margin="2.5,0,2.5,0" Grid.Column="3" Content="PDF All" Command="{Binding CreatePdfSummaryCommand}"/>
+                    <Button Margin="2.5,0,2.5,0" Grid.Column="4" Content="PDF" Command="{Binding CreatePdfCommand}"/>
+                    <Button Margin="2.5,0,2.5,0" Grid.Column="5" Content="Export" Command="{Binding ExportCommand}"/>
+                    <Button Margin="2.5,0,5,0" Grid.Column="6" Content="Import" Command="{Binding ImportCommand}"/>
                 </Grid>
                 
                 <!-- POP UPS-->
@@ -141,6 +144,19 @@
                                 <TextBlock Text="Select a tour to generate a pdf." Margin="5 30 5 5" HorizontalAlignment="Center"/>
                                 <Button Content="Close" Margin="19,5,19,5"
                                     Command="{Binding CloseCreatePdfPopUpCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Popup>
+
+                <Popup Placement="Center" IsOpen="{Binding IsPopUpCopyLogVisible}" AllowsTransparency="True">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid Background="White">
+                            <StackPanel Grid.Column="1" Margin="8,5,8,5">
+                                <TextBlock Text="An error has occured." FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Select a log to copy." Margin="5 30 5 5" HorizontalAlignment="Center"/>
+                                <Button Content="Close" Margin="19,5,19,5"
+                                    Command="{Binding CloseCopyLogPopUpCommand}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

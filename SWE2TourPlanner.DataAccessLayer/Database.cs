@@ -252,6 +252,31 @@ namespace SWE2TourPlanner.DataAccessLayer
             }
         }
 
+        public int GetToursCount()
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strcount = "Select count(*) from tours";
+            NpgsqlCommand sqlountcmd = new NpgsqlCommand(strcount, conn);
+
+            Int32 count = Convert.ToInt32(sqlountcmd.ExecuteScalar());
+            return count;
+        }
+
+        public int GetLogsCount()
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strcount = "Select count(*) from logs";
+            NpgsqlCommand sqlcountcmd = new NpgsqlCommand(strcount, conn);
+
+            Int32 count = Convert.ToInt32(sqlcountcmd.ExecuteScalar());
+            return count;
+        }
+
+
         public void DeleteItem(int tourid)
         {
             try
@@ -303,6 +328,78 @@ namespace SWE2TourPlanner.DataAccessLayer
                 string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
                 log.Error(strResponseValue, ex);
             }
+        }
+        public float GetDistanceSum()
+        {
+            float sum = 0;
+
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strdistance = "Select distance from logs";
+            NpgsqlCommand sqlcomm = new NpgsqlCommand(strdistance, conn);
+            sqlcomm.Prepare();
+
+            NpgsqlDataReader reader = sqlcomm.ExecuteReader();
+            while (reader.Read())
+            {
+                sum += float.Parse(reader.GetString(0));
+            }
+            conn.Close();
+            return sum;
+        }
+        public int GetRatingSum()
+        {
+            int sum = 0;
+
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strrating = "Select rating from logs";
+            NpgsqlCommand sqlcomm = new NpgsqlCommand(strrating, conn);
+            sqlcomm.Prepare();
+
+            NpgsqlDataReader reader = sqlcomm.ExecuteReader();
+            while (reader.Read())
+            {
+                sum += int.Parse(reader.GetString(0));
+            }
+            conn.Close();
+            return sum;
+        }
+        public int GetAvgSpeedSum()
+        {
+            int sum = 0;
+
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strAvgSpeed = "Select avgspeed from logs";
+            NpgsqlCommand sqlcomm = new NpgsqlCommand(strAvgSpeed, conn);
+            sqlcomm.Prepare();
+
+            NpgsqlDataReader reader = sqlcomm.ExecuteReader();
+            while (reader.Read())
+            {
+                sum += int.Parse(reader.GetString(0));
+            }
+            conn.Close();
+            return sum;
+        }
+
+        public int GetTopSpeed()
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+
+            string strmax = "Select max(topspeed) from logs";
+
+            NpgsqlCommand sqlmaxcmd = new NpgsqlCommand(strmax, conn);
+
+            Int32 topSpeed = Convert.ToInt32(sqlmaxcmd.ExecuteScalar());
+            conn.Close();
+
+            return topSpeed;
         }
 
         public List<LogItem> GetLogs(int tourid)
@@ -534,6 +631,11 @@ namespace SWE2TourPlanner.DataAccessLayer
         }
 
         public void Export(List<ExportObject> exportObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreatePdfSummary(int tourNr, int logsNr, float distanceSum, float distanceAvg, float ratingAvg, float avgSpeedAvg, int topSpeed)
         {
             throw new NotImplementedException();
         }
