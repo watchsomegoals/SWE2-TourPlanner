@@ -145,7 +145,42 @@ namespace SWE2TourPlanner.DataAccessLayer
                 string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
                 log.Error(strResponseValue, ex);
             }
-            
+        }
+
+        public void CreatePdfSummary(int tourNr, int logsNr, float distanceSum, float distanceAvg, float ratingAvg, float avgSpeedAvg, int topSpeed)
+        {
+            try 
+            {
+                // Initialize document object
+                Document document = new Document();
+                // Add page
+                Aspose.Pdf.Page page = document.Pages.Add();
+                // Add Header
+                var header = new TextFragment("Tours and Logs Summary");
+                header.TextState.Font = FontRepository.FindFont("Arial");
+                header.TextState.FontSize = 20;
+                header.HorizontalAlignment = HorizontalAlignment.Center;
+                header.Position = new Position(130, 720);
+                page.Paragraphs.Add(header);
+                // Add description
+                var descriptionText = "Number of tours: " + tourNr + "\nNumber of logs: " + logsNr + "\nTotal Distance: " + distanceSum + " m\nAverage Distance: " + distanceAvg +
+                                      " m\nAverage Rating: " + ratingAvg + "/10" + "\nAverage Speed: " + avgSpeedAvg + " km/h" +"\nTop Speed: " + topSpeed + " km/h";
+                var description = new TextFragment(descriptionText);
+                description.TextState.Font = FontRepository.FindFont("Times New Roman");
+                description.TextState.FontSize = 14;
+                description.HorizontalAlignment = HorizontalAlignment.Center;
+                page.Paragraphs.Add(description);
+
+                Guid obj = Guid.NewGuid();
+                document.Save(configFile.FsSettings.DocumentsFolderPath + "summary" + obj.ToString() + "test.pdf");
+                //PdfViewer viewer = new PdfViewer(document);
+                //viewer.PrintDocument();
+            }
+            catch (Exception ex)
+            {
+                string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
+                log.Error(strResponseValue, ex);
+            }
         }
 
         public string CreateImage(string from, string to, string path = "No path")
@@ -312,6 +347,36 @@ namespace SWE2TourPlanner.DataAccessLayer
                 string strResponseValue = "{\"errorMessages\":[\"" + ex.Message.ToString() + "\"],\"errors\":{}}";
                 log.Error(strResponseValue, ex);
             }
+        }
+
+        public int GetToursCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float GetDistanceSum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetLogsCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetRatingSum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetAvgSpeedSum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTopSpeed()
+        {
+            throw new NotImplementedException();
         }
     }
 }

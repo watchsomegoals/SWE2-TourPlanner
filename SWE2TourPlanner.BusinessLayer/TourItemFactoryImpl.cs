@@ -88,6 +88,31 @@ namespace SWE2TourPlanner.BusinessLayer
             filesystemTourItemDAO.CreatePdf(tourItem, databaseTourItemDAO.GetLogs(tourItem.TourId));
         }
 
+        public void CreatePdfSummary()
+        {
+            int tourNr = databaseTourItemDAO.GetToursCount();
+            int logsNr = databaseTourItemDAO.GetLogsCount();
+            int topSpeed;
+            int avgSpeedSum;
+            float avgSpeedAvg;
+            int ratingSum;
+            float ratingAvg;
+            float distanceSum;
+            float distanceAvg;
+            if(tourNr > 0 && logsNr > 0)
+            {
+                distanceSum = databaseTourItemDAO.GetDistanceSum();
+                distanceAvg = distanceSum / logsNr;
+                ratingSum = databaseTourItemDAO.GetRatingSum();
+                ratingAvg = ratingSum / logsNr;
+                avgSpeedSum = databaseTourItemDAO.GetAvgSpeedSum();
+                avgSpeedAvg = avgSpeedSum / logsNr;
+                topSpeed = databaseTourItemDAO.GetTopSpeed();
+
+                filesystemTourItemDAO.CreatePdfSummary(tourNr, logsNr, distanceSum, distanceAvg, ratingAvg, avgSpeedAvg, topSpeed);
+            }
+        }
+
         public void Export()
         {
             List<ExportObject> exportObjects = new List<ExportObject>();
