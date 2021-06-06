@@ -36,13 +36,41 @@ namespace SWE2TourPlanner.DataAccessLayer
 
         public void CreatePdf(TourItem tourItem, List<LogItem> logItems)
         {
+            //https://docs.aspose.com/pdf/net/complex-pdf-example/
             try
             {
+                string imagePath;
+                imagePath = CreateImage(tourItem.From, tourItem.To);
                 // Initialize document object
                 Document document = new Document();
 
                 // Add page
                 Aspose.Pdf.Page page = document.Pages.Add();
+
+                // Add image
+                var imageStream = new FileStream(imagePath, FileMode.Open);
+                // Add image to Images collection of Page Resources
+                page.Resources.Images.Add(imageStream);
+
+                // Using GSave operator: this operator saves current graphics state
+                page.Contents.Add(new Aspose.Pdf.Operators.GSave());
+
+                var _logoPlaceHolder = new Rectangle(20, 730, 120, 830);
+                // Create Matrix object
+                var matrix = new Matrix(new[] {
+                _logoPlaceHolder.URX - _logoPlaceHolder.LLX, 0, 0,
+                _logoPlaceHolder.URY - _logoPlaceHolder.LLY,
+                _logoPlaceHolder.LLX, _logoPlaceHolder.LLY });
+
+                // Using ConcatenateMatrix (concatenate matrix) operator: defines how image must be placed
+
+                page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
+
+                var ximage = page.Resources.Images[page.Resources.Images.Count];
+                // Using Do operator: this operator draws image
+                page.Contents.Add(new Aspose.Pdf.Operators.Do(ximage.Name));
+                // Using GRestore operator: this operator restores graphics state
+                page.Contents.Add(new Aspose.Pdf.Operators.GRestore());
 
                 // Add Header
                 var header = new TextFragment("Tour: " + tourItem.Name + " from " + tourItem.From + " to " + tourItem.To + "\nRoute Type: " + tourItem.Route);
@@ -139,6 +167,7 @@ namespace SWE2TourPlanner.DataAccessLayer
 
                 PdfViewer viewer = new PdfViewer(document);
                 viewer.PrintDocument();
+                SaveImagePath(imagePath);
             }
             catch(Exception ex)
             {

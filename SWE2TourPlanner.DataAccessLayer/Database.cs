@@ -103,7 +103,9 @@ namespace SWE2TourPlanner.DataAccessLayer
 
             NpgsqlCommand sqlmaxcmd = new NpgsqlCommand(strmax, conn);
             NpgsqlCommand sqlountcmd = new NpgsqlCommand(strcount, conn);
-
+            sqlmaxcmd.Prepare();
+            sqlountcmd.Prepare();
+            
             Int32 count = Convert.ToInt32(sqlountcmd.ExecuteScalar());
 
             if(count == 0)
